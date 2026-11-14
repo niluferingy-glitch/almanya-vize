@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Yönetim</title>
+<style>
+  body{font-family:Inter,system-ui,sans-serif;background:#fbf7f0;color:#1d2b3a;margin:0;padding:20px 16px 60px;font-size:14px}
+  .wrap{max-width:860px;margin:0 auto}
+  input{font:inherit;padding:8px 10px;border:1px solid #e8e1d5;border-radius:8px;width:320px;max-width:100%}
+  button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid #e8e1d5;background:#fff;cursor:pointer;margin-right:6px}
+  .ok{background:#2f8f5b;color:#fff;border-color:#2f8f5b}.bad{color:#c2412d}
+  .cm{background:#fff;border:1px solid #e8e1d5;border-radius:12px;padding:12px;margin:10px 0}
+  .pend{border-left:4px solid #f2994a}
+  .m{color:#6c7a89;font-size:12px}
+  h2{font-size:16px;margin:24px 0 8px}
+</style>
+</head>
+<body><div class="wrap">
+  <h1 style="font-size:20px">Kayıt yönetimi</h1>
+  <p><input type="password" id="tok" placeholder="Yönetici anahtarı"> <button id="go">Yükle</button> <span id="msg" class="m"></span></p>
+  <h2>Onay bekleyen notlar</h2><div id="pending"></div>
+  <h2>Son kayıtlar</h2><div id="all"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let tok = sessionStorage.getItem("admtok")||""; $("#tok").value = tok;
+async function api(method, body){
+  const r = await fetch("/api/admin",{method,headers:{"x-admin-token":tok,"content-type":"application/json"},body:body?JSON.stringify(body):undefined});
+  if(!r.ok) throw new Error(r.status);
+  return r.json();
+}
+function card(e){
+  return `<div class="cm ${e.approved?"":"pend"}"><div class="m">${esc(e.u)} · ${esc(e.center)} · ${esc(e.cat)} · kayıt ${e.kayit}${e.atama?" · atama "+e.atama:""}${e.randevu?" · randevu "+e.randevu:""}${e.sonuc?" · "+e.sonuc:""} · eklendi ${e.created_at.slice(0,10)}</div>
+    ${e.text?`<div style="margin:6px 0">${esc(e.text)}</div>`:""}
+    <div>${!e.approved?`<button class="ok" data-a="approve" data-id="${e.id}">Notu onayla</button><button data-a="reject" data-id="${e.id}">Notu sil, tarihleri tut</button>`:""}<button class="bad" data-a="delete" data-id="${e.id}">Kaydı tamamen sil</button></div></div>`;
+}
+async function load(){
+  tok = $("#tok").value.trim(); sessionStorage.setItem("admtok",tok); $("#msg").textContent="…";
+  try{
+    const rows = await api("GET");
+    $("#pending").innerHTML = rows.filter(r=>!r.approved).map(card).join("") || '<div class="m">Bekleyen yok.</div>';
+    $("#all").innerHTML = rows.filter(r=>r.approved).slice(0,100).map(card).join("");
+    $("#msg").textContent = rows.length+" kayıt";
+  }catch(e){ $("#msg").textContent = e.message==="403" ? "Anahtar yanlış." : "Yüklenemedi."; }
+}
+$("#go").onclick = load;
+document.addEventListener("click", async ev => {
+  const b = ev.target.closest("button[data-a]"); if(!b) return;
+  if(b.dataset.a==="delete" && !b.dataset.sure){ b.dataset.sure=1; b.textContent="Emin misin? Tekrar tıkla"; return; }
+  try{ await api("POST",{id:b.dataset.id, action:b.dataset.a}); load(); }catch(e){ $("#msg").textContent="İşlem başarısız."; }
+});
+if(tok) load();
+</script>
+</div></body></html>
