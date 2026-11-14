@@ -1,6 +1,6 @@
 <div class="narrow" style="padding-top:40px;padding-bottom:64px">
   <?= crumbs_html($crumbs) ?>
-  <p class="eyebrow">Rehber · <?= h($c['name']) ?></p>
+  <p class="eyebrow"><?= h($c['name']) ?> rehberi</p>
   <h1 class="h1" style="margin-bottom:16px"><?= h($g['title']) ?></h1>
   <p class="lead" style="margin-bottom:24px"><?= h($g['desc']) ?></p>
   <div class="byline-bar" style="margin-bottom:40px"><?= byline_html($g['updated']) ?></div>

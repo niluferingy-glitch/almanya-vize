@@ -28,19 +28,18 @@
     <a href="/ulkeler/almanya/vize/">Tüm merkezler ve kategoriler</a>
   </div>
   <p class="serif muted" style="font-size:17px;margin-bottom:24px;max-width:680px">Almanya turistik vize. Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen zamandır.</p>
-  <?= center_table_html($country, 'turistik', false) ?>
-  <p class="note">Başlangıç tahmini: Kasım 2026'da kamuya açık yorumlardan anonim olarak derlendi. Bir merkezde <?= MIN_REAL ?> kullanıcı kaydı birikince yerini gerçek veriye bırakır.</p>
+  <?= center_table_html($country, 'turistik') ?>
 </section>
 
 <section class="section section-paper">
-  <div class="wrap">
-    <h2 class="h2" style="margin-bottom:36px">Vizesel nasıl çalışır?</h2>
-    <div class="steps3">
-      <div><p class="num">1</p><h3>Tarihlerini paylaşırsın</h3><p>Merkez, kategori ve bekleme listesine kaydolduğun günü girersin. Ad, e-posta ya da pasaport bilgisi istemeyiz.</p></div>
-      <div><p class="num">2</p><h3>Ortanca süre hesaplanır</h3><p>Ataması gelen kayıtların ortanca değerini kullanırız. Uç değerler sonucu bozmaz. <a href="/yontem/">Yöntemi oku</a></p></div>
-      <div><p class="num">3</p><h3>Herkes her gün günceli görür</h3><p>Yeni bir atama geldiğinde süreler aynı gün değişir. Hangi ayın kayıtlarının işlendiği de görünür.</p></div>
-    </div>
-    <a class="btn btn-line" style="margin-top:40px" href="/paylas/">Kendi tarihlerini ekle</a>
+  <div class="narrow">
+    <h2 class="h2" style="margin-bottom:20px">Vizesel nasıl çalışır?</h2>
+    <ol class="prose prose-steps">
+      <li>Bekleme listesine kaydolduğun günü, merkezini ve kategorini paylaşırsın. Ad, e-posta ya da pasaport bilgisi istemeyiz.</li>
+      <li>Ataması gelen kayıtların ortanca değerini hesaplarız. Ortanca, birkaç uç kaydın sonucu bozmasını engeller. <a href="/yontem/">Yöntemi oku</a></li>
+      <li>Yeni bir atama geldiğinde süreler aynı gün değişir. Hangi ayın kayıtlarının işlendiği de görünür.</li>
+    </ol>
+    <a class="btn btn-line" style="margin-top:8px" href="/paylas/">Kendi tarihlerini ekle</a>
   </div>
 </section>
 
@@ -51,10 +50,6 @@
 </section>
 <?php endif; ?>
 
-<section class="wrap" style="padding-bottom:72px">
-  <div class="trust">
-    <div><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C1B19" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg><p><strong>Resmî bir kurum değiliz.</strong> Konsolosluk ya da randevu şirketiyle bağımız yok.</p></div>
-    <div><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C1B19" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p><strong>Kişisel veri toplamayız.</strong> Paylaşımlar anonimdir, istediğin an silebilirsin.</p></div>
-    <div><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C1B19" stroke-width="1.6" stroke-linecap="round"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg><p><strong>Yöntemimiz açık.</strong> Hangi veriyi nasıl hesapladığımızı <a href="/yontem/">yazıyla anlatıyoruz</a>.</p></div>
-  </div>
+<section class="narrow" style="padding-bottom:72px">
+  <p class="colophon">Vizesel resmî bir kurum değildir; konsolosluk ya da randevu şirketleriyle bağı yoktur. Kişisel veri toplamaz, paylaşımlar anonimdir ve istediğin an silinebilir. Sayıların nasıl hesaplandığı <a href="/yontem/">yöntem sayfasında</a> açıkça yazılıdır.</p>
 </section>

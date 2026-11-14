@@ -16,12 +16,12 @@
   </aside>
 
   <article class="doc-main">
-    <p class="eyebrow">Schengen · <?= h($c['name']) ?></p>
+    <p class="eyebrow">Schengen vizesi, <?= h($c['name']) ?></p>
     <h1 class="h1" style="margin-bottom:20px"><?= h($c['name']) ?> vize randevu bekleme süreleri</h1>
     <div class="byline-bar"><?= byline_html(today(), count(all_entries($country)) . ' kullanıcı kaydı') ?></div>
 
-    <section id="kisa-cevap" class="answer box box-paper" aria-labelledby="kisa-h">
-      <h2 id="kisa-h">Kısa cevap</h2>
+    <section id="kisa-cevap" class="answer" aria-labelledby="kisa-h">
+      <h2 id="kisa-h" class="sr">Kısa cevap</h2>
       <?php if ($fast && $slow): ?>
       <p><?= h($c['name']) ?> turistik vize için randevu ataması şu an <strong><?= months_text($fast['med']) ?> ile <?= months_text($slow['med']) ?> ay</strong> arasında geliyor. En hızlı merkez <?= h($fast['name']) ?> (<?= $fast['med'] ?> gün), en yavaşı <?= h($slow['name']) ?> (<?= $slow['approx'] ? 'yaklaşık ' : '' ?><?= $slow['med'] ?> gün). Aile ziyareti kategorisi genelde turistikten daha kısa sürüyor.</p>
       <?php else: ?><p>Henüz yeterli veri yok.</p><?php endif; ?>
@@ -38,7 +38,7 @@
       <?php $i = 0; foreach (CATS as $k => $v): ?>
         <div role="tabpanel" id="panel-<?= $k ?>" aria-labelledby="tab-<?= $k ?>"<?= $i ? ' hidden' : '' ?>><?= center_table_html($country, $k) ?></div>
       <?php $i++; endforeach; ?>
-      <p class="note">≈ yalnız randevu tarihi bilinen kayıtlardan hesaplandı. Kayıt sayısı <?= MIN_REAL ?>'ün altındaki merkezler kesin değildir. <a href="/yontem/">Hesaplama yöntemi</a></p>
+      <p class="note"><a href="/yontem/">Bu sayıları nasıl hesaplıyoruz?</a></p>
     </section>
 
     <section id="hesapla" aria-labelledby="hesapla-h">
@@ -67,7 +67,7 @@
       <?= entries_html($entries) ?>
     </section>
 
-    <section class="box" aria-labelledby="ekle-h">
+    <section class="cta" aria-labelledby="ekle-h">
       <h2 id="ekle-h" class="h2" style="font-size:26px;margin-bottom:8px">Tarihlerini paylaş</h2>
       <p class="serif" style="font-size:17px;color:var(--body);margin-bottom:20px">Bir dakika sürer, ad veya e-posta istemez. Paylaşımın bir sonraki başvuranın tahminini netleştirir.</p>
       <a class="btn" href="/paylas/?ulke=<?= h($country) ?>">Formu aç</a>

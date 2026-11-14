@@ -1,7 +1,7 @@
 <?php $base = '/ulkeler/' . $country . '/vize/'; $rows = array_values(array_filter(country_table($country, 'turistik'), fn($x) => $x['med'] !== null)); ?>
 <div class="narrow" style="padding-top:40px;padding-bottom:80px">
   <?= crumbs_html($crumbs) ?>
-  <p class="eyebrow">Schengen</p>
+  <p class="eyebrow">Schengen vizesi</p>
   <h1 class="h1" style="margin-bottom:16px"><?= h($c['name']) ?></h1>
   <p class="lead" style="margin-bottom:40px"><?= h($c['name']) ?> vizesi için randevu bekleme süreleri ve başvuru rehberleri.</p>
 

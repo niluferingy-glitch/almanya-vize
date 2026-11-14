@@ -12,29 +12,19 @@
   </aside>
 
   <article class="doc-main">
-    <p class="eyebrow"><?= h($c['name']) ?> · <?= h($c['provider'] ?? '') ?> başvuru merkezi</p>
+    <p class="eyebrow"><?= h($c['name']) ?> vizesi, <?= h($c['provider'] ?? '') ?> başvuru merkezi</p>
     <h1 class="h1" style="margin-bottom:20px"><?= h($cname) ?> <?= h($c['name']) ?> vize randevusu ne zaman gelir?</h1>
     <div class="byline-bar"><?= byline_html(today()) ?></div>
 
     <section aria-labelledby="ozet-h" style="margin-top:32px">
       <h2 id="ozet-h" class="sr">Kategorilere göre bekleme süresi</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
-        <?php foreach (CATS as $k => $v): $s = $stats[$k]; ?>
-          <div class="box">
-            <p class="small" style="font-weight:600;margin-bottom:6px"><?= h($v) ?></p>
-            <?php if ($s && $s['med'] !== null): ?>
-              <p class="serif" style="font-size:36px;line-height:1.1;color:var(--ink)"><?= $s['approx'] ? '≈ ' : '' ?><?= $s['med'] ?> <span style="font-size:18px" class="muted">gün</span></p>
-              <p class="small muted" style="margin-top:4px">yaklaşık <?= months_text($s['med']) ?> ay</p>
-              <?php if ($s['frontier']): ?><p class="small" style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)">Şu an işlenen: <strong><?= h(tr_month($s['frontier'])) ?></strong></p><?php endif; ?>
-              <p class="small muted" style="margin-top:6px"><?= stat_note($s) ?><?= $s['waiting'] ? ' · ' . $s['waiting'] . ' bekleyen' : '' ?></p>
-            <?php elseif ($s): ?>
-              <p class="small muted">Henüz ataması gelen paylaşım yok<?= $s['waiting'] ? ', ' . $s['waiting'] . ' kişi bekliyor' : '' ?>.</p>
-            <?php else: ?>
-              <p class="small muted">Henüz paylaşım yok.</p>
-            <?php endif; ?>
-          </div>
+      <?php $catRows = []; foreach (CATS as $k => $v) { if ($stats[$k]) $catRows[] = $stats[$k]; } ?>
+      <ol class="ledger ledger-big">
+        <?php foreach (CATS as $k => $v): $st = $stats[$k] ?: ['med' => null, 'n' => 0, 'approx' => false, 'frontier' => null, 'waiting' => 0, 'seed' => false]; ?>
+          <?= ledger_row($v, null, $st, ledger_meta($st) ?: 'henüz paylaşım yok') ?>
         <?php endforeach; ?>
-      </div>
+      </ol>
+      <?= ledger_notes($catRows) ?>
       <p class="note">Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortanca zamandır. <a href="/yontem/">Nasıl hesaplıyoruz?</a></p>
     </section>
 
@@ -54,7 +44,7 @@
       <?= entries_html($entries, false) ?>
     </section>
 
-    <section class="box" aria-labelledby="ekle-h">
+    <section class="cta" aria-labelledby="ekle-h">
       <h2 id="ekle-h" class="h2" style="font-size:26px;margin-bottom:8px">Bu merkezden mi başvurdun?</h2>
       <p class="serif" style="font-size:17px;color:var(--body);margin-bottom:20px">Tarihlerini paylaşırsan bu merkezin tahmini netleşir. Bir dakika sürer, ad veya e-posta istemez.</p>
       <a class="btn" href="/paylas/?ulke=<?= h($country) ?>&amp;merkez=<?= h($center) ?>">Tarihlerini paylaş</a>

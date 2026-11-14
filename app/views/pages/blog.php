@@ -6,7 +6,7 @@
   <article style="margin-bottom:56px">
     <a class="cover" href="/seyahatname/<?= h($fslug) ?>/" style="display:block;margin-bottom:28px" tabindex="-1" aria-hidden="true"><?= cover_img($f, '(max-width: 760px) 100vw, 1072px', false, '') ?></a>
     <div style="max-width:760px">
-      <p class="eyebrow">Öne çıkan · <?= h($f['kat']) ?></p>
+      <p class="eyebrow">Öne çıkan yazı, <?= h(mb_strtolower($f['kat'])) ?></p>
       <h2 class="h1" style="margin-bottom:14px"><a href="/seyahatname/<?= h($fslug) ?>/" style="color:var(--ink)"><?= h($f['title']) ?></a></h2>
       <p class="lead" style="color:var(--body);margin-bottom:16px"><?= h($f['desc']) ?></p>
       <p class="byline"><img src="<?= h($a['avatar']) ?>" alt="" width="28" height="28" style="width:28px;height:28px"><?= h($a['name']) ?> · <time datetime="<?= h($f['published']) ?>"><?= h(tr_date($f['published'])) ?></time> · <?= (int)$f['minutes'] ?> dk okuma</p>

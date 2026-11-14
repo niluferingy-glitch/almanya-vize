@@ -32,24 +32,41 @@ function days_html(array $s): string {
     return '<span class="num">' . ($s['approx'] ? '≈ ' : '') . $s['med'] . ' gün</span> <span class="muted">· ' . months_text($s['med']) . ' ay</span>';
 }
 
-// Masaüstünde tablo, mobilde satır listesi
-function center_table_html(string $country, string $cat, bool $withBars = true): string {
+// Kitaptaki içindekiler sayfası gibi: ad, noktalı çizgi, sayı. Dipnot işaretleri satırın sonunda.
+function marks(array $r): string {
+    $m = '';
+    if ($r['med'] !== null && $r['n'] < MIN_REAL) $m .= '*';
+    if (!empty($r['seed'])) $m .= '†';
+    return $m ? '<sup class="fn">' . $m . '</sup>' : '';
+}
+function ledger_row(string $name, ?string $href, array $r, string $meta): string {
+    $val = $r['med'] !== null ? ($r['approx'] ? '≈ ' : '') . $r['med'] . ' <span class="l-unit">gün</span>' : '<span class="l-none">henüz yok</span>';
+    $label = $href ? '<a href="' . h($href) . '">' . h($name) . '</a>' : h($name);
+    return '<li><div class="l-line"><span class="l-name">' . $label . '</span><span class="l-dots" aria-hidden="true"></span>'
+        . '<span class="l-val">' . $val . marks($r) . '</span></div>' . ($meta ? '<p class="l-meta">' . $meta . '</p>' : '') . '</li>';
+}
+function ledger_meta(array $r): string {
+    $p = [];
+    if ($r['med'] !== null && $r['frontier']) $p[] = h(tr_month($r['frontier'])) . ' kayıtları işleniyor';
+    if ($r['med'] !== null) $p[] = $r['n'] . ' paylaşım';
+    if ($r['waiting']) $p[] = $r['waiting'] . ' kişi bekliyor';
+    return implode(' · ', $p);
+}
+function ledger_notes(array $rows): string {
+    $n = []; $low = $seed = $approx = false;
+    foreach ($rows as $r) { if ($r['med'] !== null && $r['n'] < MIN_REAL) $low = true; if (!empty($r['seed'])) $seed = true; if ($r['approx']) $approx = true; }
+    if ($low) $n[] = '* ' . MIN_REAL . '\'ten az paylaşıma dayanır, kesin değildir.';
+    if ($seed) $n[] = '† Başlangıç tahmini: Kasım 2026\'da kamuya açık yorumlardan anonim olarak derlendi, yeterli paylaşım gelince kalkar.';
+    if ($approx) $n[] = '≈ Yalnız randevu tarihi bilinen kayıtlardan hesaplandı.';
+    return $n ? '<p class="footnotes">' . implode('<br>', $n) . '</p>' : '';
+}
+function center_table_html(string $country, string $cat, bool $withMeta = true): string {
     $rows = country_table($country, $cat);
     if (!$rows) return '<p class="muted">Bu kategoride henüz paylaşım yok. <a href="/paylas/?ulke=' . h($country) . '">İlk paylaşımı sen yap.</a></p>';
-    $max = max(array_map(fn($r) => $r['med'] ?? 0, $rows)) ?: 1;
     $base = '/ulkeler/' . $country . '/vize/';
-    $t = '<div class="table-box cards-mobile"><table class="data"><thead><tr><th scope="col">Merkez</th><th scope="col">Ortanca süre</th>'
-        . ($withBars ? '<th scope="col" style="width:28%">Karşılaştırma</th>' : '') . '<th scope="col">İşlenen kayıtlar</th><th scope="col">Dayanak</th></tr></thead><tbody>';
-    $m = '<ul class="rows mobile-only">';
-    foreach ($rows as $r) {
-        $link = '<a href="' . h($base . $r['slug'] . '/') . '">' . h($r['name']) . '</a>';
-        $t .= '<tr><th scope="row">' . $link . '</th><td>' . days_html($r) . '</td>';
-        if ($withBars) $t .= '<td>' . ($r['med'] ? '<div class="bar"><i style="width:' . round($r['med'] / $max * 100) . '%"></i></div>' : '') . '</td>';
-        $t .= '<td>' . ($r['frontier'] ? h(tr_month($r['frontier'])) : '<span class="muted">-</span>') . '</td><td class="muted small">' . stat_note($r) . '</td></tr>';
-        $m .= '<li><div>' . $link . '<p class="small muted">' . ($r['frontier'] ? h(tr_month($r['frontier'])) . ' kayıtları · ' : '') . stat_note($r) . '</p></div>'
-            . '<p class="r-num">' . ($r['med'] !== null ? ($r['approx'] ? '≈ ' : '') . $r['med'] . ' gün' : '-') . '</p></li>';
-    }
-    return $t . '</tbody></table></div>' . $m . '</ul>';
+    $o = '<ol class="ledger">';
+    foreach ($rows as $r) $o .= ledger_row($r['name'], $base . $r['slug'] . '/', $r, $withMeta ? ledger_meta($r) : '');
+    return $o . '</ol>' . ledger_notes($rows);
 }
 
 function calc_html(string $country, ?string $center = null, ?string $cat = null): string {
