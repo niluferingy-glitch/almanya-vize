@@ -9,13 +9,13 @@ RewriteEngine On
 # SSL sertifika doğrulaması (Let's Encrypt) her zaman serbest
 RewriteRule ^\.well-known/ - [L]
 
-# www ve http -> https://vizesel.com (SSL etkin olduktan sonra çalışır)
-RewriteCond %{HTTP_HOST} ^www\.vizesel\.com$ [NC]
-RewriteRule ^ https://vizesel.com%{REQUEST_URI} [L,R=301]
+# Tek adres: https://www.vizesel.com (http ve www'siz istekler buraya yönlenir)
+RewriteCond %{HTTP_HOST} ^vizesel\.com$ [NC]
+RewriteRule ^ https://www.vizesel.com%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteCond %{HTTP_HOST} ^vizesel\.com$ [NC]
-RewriteRule ^ https://vizesel.com%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} ^www\.vizesel\.com$ [NC]
+RewriteRule ^ https://www.vizesel.com%{REQUEST_URI} [L,R=301]
 
 # Gizli dosyalar
 RewriteRule (^|/)\.(?!well-known/) - [F]

@@ -6,10 +6,10 @@
     <?php foreach (countries() as $slug => $c): ?>
       <li>
         <?php if ($c['active']): $r = array_values(array_filter(country_table($slug, 'turistik'), fn($x) => $x['med'] !== null)); ?>
-          <div><a href="/ulkeler/<?= h($slug) ?>/vize/" style="font-size:20px" class="serif"><?= h($c['name']) ?></a><p class="small muted"><?= count($c['centers']) ?> başvuru merkezi</p></div>
+          <div><a href="/ulkeler/<?= h($slug) ?>/vize/" style="font-size:var(--fs-4)" class="serif"><?= h($c['name']) ?></a><p class="small muted"><?= count($c['centers']) ?> başvuru merkezi</p></div>
           <p class="small"><?= $r ? 'Turistik: ' . $r[0]['med'] . ' ile ' . end($r)['med'] . ' gün' : '' ?></p>
         <?php else: ?>
-          <div><span class="serif" style="font-size:20px;color:var(--muted)"><?= h($c['name']) ?></span><p class="small muted">Yakında</p></div>
+          <div><span class="serif" style="font-size:var(--fs-4);color:var(--muted)"><?= h($c['name']) ?></span><p class="small muted">Yakında</p></div>
         <?php endif; ?>
       </li>
     <?php endforeach; ?>

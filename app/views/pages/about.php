@@ -14,9 +14,9 @@
   <div class="box" style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;margin-bottom:40px">
     <img src="<?= h($a['portrait']) ?>" alt="<?= h($a['name']) ?>" width="160" height="200" style="width:160px;height:200px;border-radius:12px;object-fit:cover">
     <div style="flex:1 1 300px">
-      <p style="font-size:18px;font-weight:600"><a href="<?= h($a['url']) ?>" style="color:var(--ink)"><?= h($a['name']) ?></a></p>
+      <p style="font-size:var(--fs-4);font-weight:600"><a href="<?= h($a['url']) ?>" style="color:var(--ink)"><?= h($a['name']) ?></a></p>
       <p class="small muted" style="margin-bottom:12px"><?= h($a['role']) ?> · <?= h($a['city']) ?></p>
-      <p class="serif" style="font-size:17px;color:var(--body)"><?= h($a['bio']) ?></p>
+      <p class="serif" style="font-size:var(--fs-3);color:var(--body)"><?= h($a['bio']) ?></p>
     </div>
   </div>
   <div class="prose">

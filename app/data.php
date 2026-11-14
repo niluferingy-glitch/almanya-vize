@@ -13,7 +13,6 @@ function countries(): array {
             'centers' => [
                 'istanbul-gayrettepe' => ['name' => 'İstanbul Gayrettepe', 'city' => 'İstanbul'],
                 'istanbul-altunizade' => ['name' => 'İstanbul Altunizade', 'city' => 'İstanbul'],
-                'istanbul-beyoglu'    => ['name' => 'İstanbul Beyoğlu',    'city' => 'İstanbul'],
                 'ankara'              => ['name' => 'Ankara',              'city' => 'Ankara'],
                 'izmir'               => ['name' => 'İzmir',               'city' => 'İzmir'],
                 'antalya'             => ['name' => 'Antalya',             'city' => 'Antalya'],
@@ -41,7 +40,6 @@ function seed(): array {
             'istanbul-altunizade' => ['turistik' => ['med' => 416, 'n' => 1, 'waiting' => 6, 'frontier' => '2025-09', 'approx' => true],
                                       'ziyaret'  => ['med' => null, 'n' => 0, 'waiting' => 1],
                                       'ticari'   => ['med' => 27,  'n' => 1, 'waiting' => 0, 'frontier' => '2026-09']],
-            'istanbul-beyoglu'    => ['turistik' => ['med' => null, 'n' => 0, 'waiting' => 1]],
             'izmir'               => ['turistik' => ['med' => 371, 'n' => 2, 'waiting' => 1, 'frontier' => '2025-11'],
                                       'ziyaret'  => ['med' => 209, 'n' => 1, 'waiting' => 1, 'frontier' => '2026-03']],
             'antalya'             => ['turistik' => ['med' => 372, 'n' => 4, 'waiting' => 1, 'frontier' => '2025-10']],

@@ -10,6 +10,6 @@
     <p class="serif" style="color:var(--body);margin-bottom:14px">Merkezine göre güncel bekleme süresine bak.</p>
     <a class="btn" href="/ulkeler/<?= h($country) ?>/vize/">Bekleme süreleri</a>
   </div>
-  <h2 class="h2" style="font-size:22px;margin-bottom:12px">Kaynaklar</h2>
+  <h2 class="h2" style="font-size:var(--fs-5);margin-bottom:12px">Kaynaklar</h2>
   <?= sources_html(sources_almanya()) ?>
 </div>

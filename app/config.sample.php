@@ -1,7 +1,7 @@
 <?php
 // Bu dosyayı config.php adıyla kopyalayıp değerleri doldurun. config.php git'e girmez.
 return [
-    'site_url'    => 'https://vizesel.com',
+    'site_url'    => 'https://www.vizesel.com',
     // Veritabanı. Hosting'de MySQL, yerelde test için SQLite kullanılabilir.
     'db_dsn'      => 'mysql:host=localhost;dbname=KULLANICI_vizesel;charset=utf8mb4',
     'db_user'     => 'KULLANICI_vizesel',

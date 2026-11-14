@@ -27,7 +27,7 @@
     <h2 id="bugun" class="h2">Bugünkü bekleme süreleri</h2>
     <a href="/ulkeler/almanya/vize/">Tüm merkezler ve kategoriler</a>
   </div>
-  <p class="serif muted" style="font-size:17px;margin-bottom:24px;max-width:680px">Almanya turistik vize. Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen zamandır.</p>
+  <p class="serif muted" style="font-size:var(--fs-3);margin-bottom:24px;max-width:680px">Almanya turistik vize. Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen zamandır.</p>
   <?= center_table_html($country, 'turistik') ?>
 </section>
 

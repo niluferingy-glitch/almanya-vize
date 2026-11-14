@@ -5,10 +5,10 @@
     <div style="flex:1 1 320px">
       <p class="eyebrow"><?= h($a['role']) ?></p>
       <h1 class="h1" style="margin-bottom:12px"><?= h($a['name']) ?></h1>
-      <p class="serif" style="font-size:19px;line-height:1.6;color:var(--body)"><?= h($a['bio']) ?></p>
+      <p class="serif" style="font-size:var(--fs-4);line-height:1.6;color:var(--body)"><?= h($a['bio']) ?></p>
     </div>
   </div>
-  <h2 class="h2" style="font-size:24px;margin-bottom:12px">Yazıları ve sayfaları</h2>
+  <h2 class="h2" style="font-size:var(--fs-5);margin-bottom:12px">Yazıları ve sayfaları</h2>
   <ul class="sources">
     <?php foreach (posts() as $ps => $p): ?><li><a href="/seyahatname/<?= h($ps) ?>/"><?= h($p['title']) ?></a></li><?php endforeach; ?>
     <?php foreach (guides() as $cs => $gs) foreach ($gs as $gslug => $g): ?><li><a href="/ulkeler/<?= h($cs) ?>/vize/<?= h($gslug) ?>/"><?= h($g['title']) ?></a></li><?php endforeach; ?>

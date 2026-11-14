@@ -4,7 +4,7 @@
   <p class="lead" style="margin-bottom:32px">Düzeltme, öneri ya da kayıt silme talebi için e-posta gönderebilirsin.</p>
   <div class="box box-paper" style="margin-bottom:32px">
     <p class="small muted" style="margin-bottom:4px">E-posta</p>
-    <p style="font-size:20px;font-weight:600"><a href="mailto:<?= h(cfg('contact_email')) ?>"><?= h(cfg('contact_email')) ?></a></p>
+    <p style="font-size:var(--fs-4);font-weight:600"><a href="mailto:<?= h(cfg('contact_email')) ?>"><?= h(cfg('contact_email')) ?></a></p>
   </div>
   <div class="prose">
     <p>Kayıt silme talebinde kaydı bulabilmemiz için merkezi, kategoriyi ve kayıt tarihini yazman yeterli. Ad ya da pasaport bilgisi gönderme.</p>

@@ -34,8 +34,8 @@
     <p>Bir sayının yanlış olduğunu düşünüyorsan <a href="/iletisim/">bize yaz</a>. Düzeltmeleri aşağıdaki değişiklik günlüğüne tarihleriyle ekliyoruz.</p>
   </div>
   <section style="border-top:1px solid var(--line);padding-top:32px;margin-top:24px">
-    <h2 style="font-size:16px;font-weight:600;margin-bottom:16px">Değişiklik günlüğü</h2>
-    <dl style="margin:0;display:grid;grid-template-columns:140px 1fr;gap:10px 20px;color:var(--body);font-size:15px">
+    <h2 style="font-size:var(--fs-3);font-weight:600;margin-bottom:16px">Değişiklik günlüğü</h2>
+    <dl style="margin:0;display:grid;grid-template-columns:140px 1fr;gap:10px 20px;color:var(--body);font-size:var(--fs-2)">
       <dt class="muted">14 Kasım 2026</dt><dd style="margin:0">Site açıldı. Almanya için başlangıç tahmini eklendi.</dd>
     </dl>
   </section>

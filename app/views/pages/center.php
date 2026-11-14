@@ -45,13 +45,13 @@
     </section>
 
     <section class="cta" aria-labelledby="ekle-h">
-      <h2 id="ekle-h" class="h2" style="font-size:26px;margin-bottom:8px">Bu merkezden mi başvurdun?</h2>
-      <p class="serif" style="font-size:17px;color:var(--body);margin-bottom:20px">Tarihlerini paylaşırsan bu merkezin tahmini netleşir. Bir dakika sürer, ad veya e-posta istemez.</p>
+      <h2 id="ekle-h" class="h2" style="font-size:var(--fs-5);margin-bottom:8px">Bu merkezden mi başvurdun?</h2>
+      <p class="serif" style="font-size:var(--fs-3);color:var(--body);margin-bottom:20px">Tarihlerini paylaşırsan bu merkezin tahmini netleşir. Bir dakika sürer, ad veya e-posta istemez.</p>
       <a class="btn" href="/paylas/?ulke=<?= h($country) ?>&amp;merkez=<?= h($center) ?>">Tarihlerini paylaş</a>
     </section>
 
     <section aria-labelledby="ilgili-h">
-      <h2 id="ilgili-h" class="h2" style="font-size:24px;margin-bottom:12px">İlgili sayfalar</h2>
+      <h2 id="ilgili-h" class="h2" style="font-size:var(--fs-5);margin-bottom:12px">İlgili sayfalar</h2>
       <ul class="sources">
         <li><a href="<?= h($base) ?>"><?= h($c['name']) ?> vize bekleme süreleri, tüm merkezler</a></li>
         <li><a href="<?= h($base) ?>randevu-nasil-alinir/"><?= h($c['name']) ?> vize randevusu nasıl alınır?</a></li>

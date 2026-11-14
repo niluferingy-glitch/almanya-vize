@@ -6,8 +6,8 @@
     <button class="btn" type="button" id="adm-go">Yükle</button>
     <span class="small muted" id="adm-msg"></span>
   </form>
-  <h2 style="font-size:16px;font-weight:600;margin:24px 0 8px">Onay bekleyen notlar</h2>
+  <h2 style="font-size:var(--fs-3);font-weight:600;margin:24px 0 8px">Onay bekleyen notlar</h2>
   <div id="adm-pending"></div>
-  <h2 style="font-size:16px;font-weight:600;margin:32px 0 8px">Son kayıtlar</h2>
+  <h2 style="font-size:var(--fs-3);font-weight:600;margin:32px 0 8px">Son kayıtlar</h2>
   <div id="adm-all"></div>
 </div>

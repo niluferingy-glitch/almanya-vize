@@ -59,7 +59,7 @@ if ($norm !== $path) redirect($norm . ($query ? '?' . $query : ''));
 $seg = array_values(array_filter(explode('/', $path)));
 
 // Eski Cloudflare adreslerinden ve kısa yollardan yönlendirmeler
-$aliases = ['/almanya/' => '/ulkeler/almanya/vize/', '/defter/' => '/seyahatname/', '/blog/' => '/seyahatname/', '/vize/' => '/ulkeler/almanya/vize/'];
+$aliases = ['/almanya/' => '/ulkeler/almanya/vize/', '/defter/' => '/seyahatname/', '/blog/' => '/seyahatname/', '/vize/' => '/ulkeler/almanya/vize/', '/ulkeler/almanya/vize/istanbul-beyoglu/' => '/ulkeler/almanya/vize/'];
 if (isset($aliases[$path])) redirect($aliases[$path]);
 
 $pagesDir = APP_DIR . '/views/pages/';

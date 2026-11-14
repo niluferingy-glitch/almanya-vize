@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /yonetim/
 
-Sitemap: https://vizesel.com/sitemap.xml
+Sitemap: https://www.vizesel.com/sitemap.xml

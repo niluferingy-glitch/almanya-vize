@@ -68,13 +68,13 @@
     </section>
 
     <section class="cta" aria-labelledby="ekle-h">
-      <h2 id="ekle-h" class="h2" style="font-size:26px;margin-bottom:8px">Tarihlerini paylaş</h2>
-      <p class="serif" style="font-size:17px;color:var(--body);margin-bottom:20px">Bir dakika sürer, ad veya e-posta istemez. Paylaşımın bir sonraki başvuranın tahminini netleştirir.</p>
+      <h2 id="ekle-h" class="h2" style="font-size:var(--fs-5);margin-bottom:8px">Tarihlerini paylaş</h2>
+      <p class="serif" style="font-size:var(--fs-3);color:var(--body);margin-bottom:20px">Bir dakika sürer, ad veya e-posta istemez. Paylaşımın bir sonraki başvuranın tahminini netleştirir.</p>
       <a class="btn" href="/paylas/?ulke=<?= h($country) ?>">Formu aç</a>
     </section>
 
     <section id="kaynaklar" aria-labelledby="kay-h">
-      <h2 id="kay-h" class="h2" style="font-size:24px;margin-bottom:12px">Kaynaklar</h2>
+      <h2 id="kay-h" class="h2" style="font-size:var(--fs-5);margin-bottom:12px">Kaynaklar</h2>
       <?= sources_html(array_merge(sources_almanya(), [['Vizesel yöntem ve veri temizleme kuralları', '/yontem/']])) ?>
     </section>
   </article>

@@ -12,7 +12,7 @@ PHP 8 + MySQL. Paylaşımlı hostingde (cPanel / DirectAdmin) çalışır, derle
 1. Panelden MySQL veritabanı ve kullanıcısı oluştur, `schema.sql` dosyasını phpMyAdmin ile içe aktar.
 2. `app/config.sample.php` dosyasını `app/config.php` olarak kopyala, veritabanı bilgilerini, `admin_token` ve `salt` değerlerini doldur.
 3. `app/` klasörünü ev dizinine (public_html'in yanına), `public_html/` içeriğini sitenin kök klasörüne yükle.
-4. Panelden ücretsiz SSL'i (Let's Encrypt / AutoSSL) aç. `.htaccess` http ve www isteklerini https://vizesel.com adresine yönlendirir.
+4. Panelden ücretsiz SSL'i (Let's Encrypt / AutoSSL) aç. `.htaccess` http ve www isteklerini https://www.vizesel.com adresine yönlendirir.
 
 ## Yerel test
 ```sh
