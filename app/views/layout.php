@@ -2,7 +2,7 @@
 /** @var string $body @var array $meta */
 $canonical = $meta['canonical'] ?? null;
 $schemas = array_merge([schema_site()], $meta['schema']);
-$v = '20261114';
+$v = '20261114b';
 ?><!doctype html>
 <html lang="tr">
 <head>

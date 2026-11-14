@@ -125,7 +125,7 @@ a.chip.on,.chip.on{background:var(--accent-soft);border-color:var(--accent-soft)
   .hero .h1{font-size:36px}
   .hero .lead{font-size:18px;margin-bottom:28px}
   .searchbar{flex-direction:column;border-radius:16px;padding:0;overflow:hidden;gap:0}
-  .searchbar label{border-right:0;border-bottom:1px solid var(--line2);padding:12px 16px}
+  .searchbar label{flex:0 0 auto;border-right:0;border-bottom:1px solid var(--line2);padding:12px 16px}
   .searchbar .btn{border-radius:0;min-height:56px}
   .hero .chips{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;margin:28px -20px 0;padding:0 20px 4px}
 }
