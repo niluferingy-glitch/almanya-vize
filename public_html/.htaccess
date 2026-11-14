@@ -6,6 +6,9 @@ AddDefaultCharset UTF-8
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# SSL sertifika doğrulaması (Let's Encrypt) her zaman serbest
+RewriteRule ^\.well-known/ - [L]
+
 # www ve http -> https://vizesel.com (SSL etkin olduktan sonra çalışır)
 RewriteCond %{HTTP_HOST} ^www\.vizesel\.com$ [NC]
 RewriteRule ^ https://vizesel.com%{REQUEST_URI} [L,R=301]
@@ -15,7 +18,7 @@ RewriteCond %{HTTP_HOST} ^vizesel\.com$ [NC]
 RewriteRule ^ https://vizesel.com%{REQUEST_URI} [L,R=301]
 
 # Gizli dosyalar
-RewriteRule (^|/)\. - [F]
+RewriteRule (^|/)\.(?!well-known/) - [F]
 
 # Var olan dosyalar doğrudan, gerisi index.php
 RewriteCond %{REQUEST_FILENAME} -f
