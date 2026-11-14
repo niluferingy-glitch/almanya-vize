@@ -1,23 +1,25 @@
+-- Vizesel veritabanı (MySQL / MariaDB)
 CREATE TABLE IF NOT EXISTS entries (
-  id TEXT PRIMARY KEY,
-  token_hash TEXT NOT NULL,
-  center TEXT NOT NULL,
-  cat TEXT NOT NULL,
-  kayit TEXT NOT NULL,
-  atama TEXT,
-  randevu TEXT,
-  sonuc TEXT,
-  u TEXT NOT NULL DEFAULT 'anonim',
-  text TEXT NOT NULL DEFAULT '',
-  approved INTEGER NOT NULL DEFAULT 1,
-  created_at TEXT NOT NULL,
-  updated_at TEXT NOT NULL
-);
-CREATE INDEX IF NOT EXISTS idx_entries_center_cat ON entries (center, cat);
-CREATE INDEX IF NOT EXISTS idx_entries_created ON entries (created_at);
+  id CHAR(16) NOT NULL PRIMARY KEY,
+  token_hash CHAR(64) NOT NULL,
+  country VARCHAR(40) NOT NULL,
+  center VARCHAR(60) NOT NULL,
+  cat VARCHAR(20) NOT NULL,
+  kayit DATE NOT NULL,
+  atama DATE NULL,
+  randevu DATE NULL,
+  sonuc VARCHAR(10) NULL,
+  u VARCHAR(40) NOT NULL DEFAULT 'anonim',
+  text VARCHAR(400) NOT NULL DEFAULT '',
+  approved TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  KEY idx_country_center (country, center, cat),
+  KEY idx_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS limits (
-  k TEXT PRIMARY KEY,
-  day TEXT NOT NULL,
-  n INTEGER NOT NULL DEFAULT 0
-);
+  k CHAR(64) NOT NULL PRIMARY KEY,
+  day DATE NOT NULL,
+  n INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

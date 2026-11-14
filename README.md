@@ -1,34 +1,26 @@
-# Almanya vize bekleme süreleri
+# vizesel.com
 
-Cloudflare Pages + D1 + Pages Functions. Aylık maliyet 0, yalnız alan adı ücreti.
+PHP 8 + MySQL. Paylaşımlı hostingde (cPanel / DirectAdmin) çalışır, derleme adımı yok.
 
-## Yapı
-- `public/index.html` – site
-- `public/admin.html` – not onaylama paneli (yönetici anahtarı ister)
-- `functions/api/entries/*` – kayıt ekleme, güncelleme, silme, listeleme
-- `functions/api/admin.js` – onay/silme
-- `schema.sql` – veritabanı tabloları
+## Klasörler
+- `public_html/` sitenin kök klasörü: `index.php` (tüm istekler), `.htaccess`, `assets/`
+- `app/` uygulama kodu. Hostingde `public_html` ile **aynı seviyeye** (dışına) konur, tarayıcıdan erişilemez.
+- `schema.sql` veritabanı tabloları
+- `tools/dev-router.php` yerel test için
 
-## İlk kurulum (bir kez)
+## İlk kurulum (hosting)
+1. Panelden MySQL veritabanı ve kullanıcısı oluştur, `schema.sql` dosyasını phpMyAdmin ile içe aktar.
+2. `app/config.sample.php` dosyasını `app/config.php` olarak kopyala, veritabanı bilgilerini, `admin_token` ve `salt` değerlerini doldur.
+3. `app/` klasörünü ev dizinine (public_html'in yanına), `public_html/` içeriğini sitenin kök klasörüne yükle.
+4. Panelden ücretsiz SSL'i (Let's Encrypt / AutoSSL) aç. `.htaccess` http ve www isteklerini https://vizesel.com adresine yönlendirir.
+
+## Yerel test
 ```sh
-npm i -g wrangler
-export CLOUDFLARE_API_TOKEN=...   # Pages:Edit, D1:Edit yetkili token
-wrangler d1 create almanya-vize   # çıkan database_id'yi wrangler.toml'a yaz
-wrangler d1 execute almanya-vize --remote --file=schema.sql
-wrangler pages project create almanya-vize --production-branch=main
-wrangler pages secret put ADMIN_TOKEN --project-name=almanya-vize   # admin paneli şifresi
-wrangler pages secret put SALT --project-name=almanya-vize          # rastgele bir dizi
+VIZESEL_CONFIG=/yol/config.test.php php -S localhost:8080 -t public_html tools/dev-router.php
 ```
 
-## Her yayın
-```sh
-wrangler pages deploy public --project-name=almanya-vize
-```
-
-## Moderasyon
-`/admin.html` adresine gir, yönetici anahtarını yaz. Tarihler onaysız hesaba girer; yalnız serbest metin notları onaydan sonra görünür.
-
-## Veri
-- Kişisel veri yok: ad, e-posta, telefon toplanmaz. Takma ad isteğe bağlı.
-- IP yalnız günlük sınır için tuzlu SHA-256 özeti olarak tutulur, 24 saat sonra silinir.
-- Her kayıt için bir düzenleme anahtarı üretilir, yalnız tarayıcıda saklanır; kullanıcı kaydını onunla günceller veya siler.
+## İçerik
+- Merkezler, ülkeler, başlangıç tahmini: `app/data.php`
+- Seyahatname yazıları, rehberler, yardım sayfaları, SSS, menü: `app/content.php`
+- Pasaport ve Gezi rehberi menüde kapalı; içerik dolunca `nav_items()` içinde `'on' => true` yapılır.
+- Yönetim paneli: `/yonetim/` (yönetici anahtarı ister). Tarihler onaysız hesaba girer, notlar onaydan sonra görünür.
