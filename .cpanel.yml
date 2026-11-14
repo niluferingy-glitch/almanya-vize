@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/vizeselc
+    - /bin/mkdir -p $DEPLOYPATH/app
+    - /bin/cp -R app/. $DEPLOYPATH/app/
+    - /bin/cp schema.sql $DEPLOYPATH/app/schema.sql
+    - /bin/cp -R public_html/. $DEPLOYPATH/public_html/
