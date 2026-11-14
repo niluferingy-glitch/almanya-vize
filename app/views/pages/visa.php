@@ -29,7 +29,7 @@
 
     <section id="sureler" aria-labelledby="sureler-h">
       <h2 id="sureler-h" class="h2">Merkezlere göre süreler</h2>
-      <p class="sub">Bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortanca süre. Merkez adına tıklayarak ayrıntılarını görebilirsin.</p>
+      <p class="sub">Bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortalama süre. Merkez adına tıklayarak ayrıntılarını görebilirsin.</p>
       <div class="tabs" role="tablist" aria-label="Kategori">
         <?php $i = 0; foreach (CATS as $k => $v): ?>
           <button type="button" role="tab" id="tab-<?= $k ?>" aria-controls="panel-<?= $k ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"><?= h($v) ?></button>

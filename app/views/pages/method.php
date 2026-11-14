@@ -9,8 +9,8 @@
     <p>Tek bir aralığı: başvuru sahibinin randevu bekleme listesine kaydolduğu gün ile randevu atama mailinin geldiği gün arasındaki gün sayısı. Randevu sonrası evrak ve sonuç süreleri ayrıca, yalnız bilgi olarak gösterilir.</p>
     <h2>Veri nereden geliyor?</h2>
     <p>Başvuru sahipleri sitedeki formla merkez, kategori, kayıt tarihi ve varsa atama, randevu ve sonuç tarihlerini paylaşır. Konsolosluklar ve randevu sağlayıcıları bekleme süresi yayınlamadığı için resmî bir kaynakla karşılaştırma yapamıyoruz.</p>
-    <h2>Neden ortalama değil, ortanca?</h2>
-    <p>Ortanca, kayıtları küçükten büyüğe sıraladığında ortada kalan değerdir. Birkaç hatalı ya da sıra dışı kayıt sonucu kaydırmaz. Örneğin 300, 310, 320, 330 ve 600 günlük beş varsayımsal kaydın ortalaması 372 gündür ve tek bir uç kayıt yüzünden kimsenin yaşamadığı bir süreyi gösterir. Ortancası 320 gündür.</p>
+    <h2>“Ortalama” derken neyi kastediyoruz?</h2>
+    <p>Sitede “ortalama süre” olarak gösterdiğimiz sayı, istatistikte ortanca denen değerdir: kayıtları küçükten büyüğe sıraladığında ortada kalan sayı. Düz ortalama yerine bunu kullanıyoruz, çünkü birkaç hatalı ya da sıra dışı kayıt sonucu kaydırmaz. Örneğin 300, 310, 320, 330 ve 600 günlük beş varsayımsal kaydın düz ortalaması 372 gündür ve tek bir uç kayıt yüzünden kimsenin yaşamadığı bir süreyi gösterir. Sitede bu kayıtlar için 320 gün yazar.</p>
     <h2>Hangi kayıtları dışarıda bırakıyoruz?</h2>
     <ul>
       <li>Kayıt tarihi bugünden sonra olan kayıtlar.</li>

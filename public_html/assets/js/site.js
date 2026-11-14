@@ -48,8 +48,8 @@
         out.hidden = false;
         out.innerHTML = '<div><p class="small" style="color:var(--body)">Tahmini atama</p><p class="big">' + esc(when) + '</p></div>'
           + '<p class="why">' + (waited >= 0 ? waited + ' gündür bekliyorsun. ' : '')
-          + (left > 0 ? 'Yaklaşık ' + left + ' gün kaldı. ' : 'Ortanca süreyi geçtin, atama her an gelebilir. ')
-          + 'Hesap: ' + esc(basis) + ' için ' + s.n + ' kaydın ortancası (' + s.med + ' gün)' + (s.seed ? ', başlangıç tahmini' : '') + '.</p>';
+          + (left > 0 ? 'Yaklaşık ' + left + ' gün kaldı. ' : 'Ortalama süreyi geçtin, atama her an gelebilir. ')
+          + 'Hesap: ' + esc(basis) + ' için ' + s.n + ' kayda göre ortalama ' + s.med + ' gün' + (s.seed ? ', başlangıç tahmini' : '') + '.</p>';
       };
       form.addEventListener('input', run); form.addEventListener('submit', function (e) { e.preventDefault(); run(); });
     });

@@ -25,7 +25,7 @@
         <?php endforeach; ?>
       </ol>
       <?= ledger_notes($catRows) ?>
-      <p class="note">Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortanca zamandır. <a href="/yontem/">Nasıl hesaplıyoruz?</a></p>
+      <p class="note">Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortalama zamandır. <a href="/yontem/">Nasıl hesaplıyoruz?</a></p>
     </section>
 
     <section id="hesapla" aria-labelledby="hesapla-h">

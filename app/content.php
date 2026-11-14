@@ -152,7 +152,7 @@ HTML,
         ],
         'sozluk' => [
             'title' => 'Vize sözlüğü',
-            'desc'  => 'Bekleme listesi, atama, ortanca süre ve Vizesel\'de geçen diğer terimlerin kısa açıklamaları.',
+            'desc'  => 'Bekleme listesi, atama, ortalama süre ve Vizesel\'de geçen diğer terimlerin kısa açıklamaları.',
             'body' => <<<'HTML'
 <dl class="glossary">
 <dt>Bekleme listesi</dt><dd>Randevu almak için kaydolduğun sıra. Almanya için kayıt iDATA'nın sitesinden yapılır.</dd>
@@ -160,7 +160,7 @@ HTML,
 <dt>Atama maili</dt><dd>Sıran geldiğinde gelen ve randevu tarihini bildiren e-posta.</dd>
 <dt>Randevu</dt><dd>Belgelerini teslim etmek için başvuru merkezine gittiğin gün.</dd>
 <dt>Kategori</dt><dd>Seyahat amacına göre seçtiğin vize türü: turistik, aile ya da arkadaş ziyareti, ticari gibi.</dd>
-<dt>Ortanca süre</dt><dd>Kayıtlar küçükten büyüğe sıralandığında ortada kalan değer. Birkaç uç kayıt sonucu bozmaz.</dd>
+<dt>Ortalama süre</dt><dd>Sitede gösterilen bekleme süresi. Kayıtlar küçükten büyüğe sıralandığında ortada kalan değerdir (ortanca), bu yüzden birkaç uç kayıt sonucu bozmaz.</dd>
 <dt>Şu an işlenen kayıtlar</dt><dd>Ataması gelen en yeni kaydın ayı. Sıranın hangi aya kadar ilerlediğini gösterir.</dd>
 <dt>Başlangıç tahmini</dt><dd>Site açılırken kamuya açık yorumlardan derlenen toplu sayılar. Bir merkezde 3 kullanıcı kaydı birikince kaldırılır.</dd>
 </dl>

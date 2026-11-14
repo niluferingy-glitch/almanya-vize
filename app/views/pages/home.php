@@ -36,7 +36,7 @@
     <h2 class="h2" style="margin-bottom:20px">Vizesel nasıl çalışır?</h2>
     <ol class="prose prose-steps">
       <li>Bekleme listesine kaydolduğun günü, merkezini ve kategorini paylaşırsın. Ad, e-posta ya da pasaport bilgisi istemeyiz.</li>
-      <li>Ataması gelen kayıtların ortanca değerini hesaplarız. Ortanca, birkaç uç kaydın sonucu bozmasını engeller. <a href="/yontem/">Yöntemi oku</a></li>
+      <li>Ataması gelen kayıtlardan ortalama bekleme süresini çıkarırız. Birkaç uç kayıt sonucu bozmasın diye ortanca değeri kullanırız. <a href="/yontem/">Yöntemi oku</a></li>
       <li>Yeni bir atama geldiğinde süreler aynı gün değişir. Hangi ayın kayıtlarının işlendiği de görünür.</li>
     </ol>
     <a class="btn btn-line" style="margin-top:8px" href="/paylas/">Kendi tarihlerini ekle</a>
