@@ -2,7 +2,7 @@
 <div class="narrow" style="padding-top:40px;padding-bottom:80px">
   <?= crumbs_html($crumbs) ?>
   <p class="eyebrow">Schengen vizesi</p>
-  <h1 class="h1" style="margin-bottom:16px"><?= h($c['name']) ?></h1>
+  <h1 class="h1" style="margin-bottom:16px"><?= h($c['name']) ?> vizesi ve seyahat rehberi</h1>
   <p class="lead" style="margin-bottom:40px"><?= h($c['name']) ?> vizesi için randevu bekleme süreleri ve başvuru rehberleri.</p>
 
   <a class="box" href="<?= h($base) ?>" style="display:block;color:inherit;text-decoration:none;margin-bottom:16px">

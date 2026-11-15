@@ -1,8 +1,8 @@
 <?php $a = author(); ?>
 <div class="narrow" style="padding-top:40px;padding-bottom:96px">
   <?= crumbs_html($crumbs) ?>
-  <p class="eyebrow">Hakkında</p>
-  <h1 class="h1" style="margin-bottom:24px">Bekleyenlerin birbirine tuttuğu kayıt</h1>
+  <p class="eyebrow">Bağımsız bir başvuru defteri</p>
+  <h1 class="h1" style="margin-bottom:24px">Vizesel hakkında</h1>
   <p class="lead" style="margin-bottom:48px">Vizesel, vize randevusu bekleyen insanların kendi tarihlerini paylaşarak birbirine yol gösterdiği bağımsız bir sitedir.</p>
   <div class="prose">
     <h2 style="margin-top:0">Neden var?</h2>

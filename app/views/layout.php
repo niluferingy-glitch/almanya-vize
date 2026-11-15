@@ -11,7 +11,7 @@ $v = '20261115d';
 <title><?= h($meta['title']) ?></title>
 <meta name="description" content="<?= h($meta['desc']) ?>">
 <meta name="robots" content="<?= h($meta['robots']) ?>,max-image-preview:large">
-<?php if ($canonical): ?><link rel="canonical" href="<?= h(url($canonical)) ?>">
+<?php if ($canonical && str_starts_with($meta['robots'], 'index')): ?><link rel="canonical" href="<?= h(url($canonical)) ?>">
 <?php endif; ?>
 <meta property="og:site_name" content="Vizesel">
 <meta property="og:locale" content="tr_TR">

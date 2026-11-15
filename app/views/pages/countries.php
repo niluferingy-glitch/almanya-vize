@@ -1,6 +1,6 @@
 <div class="narrow" style="padding-top:40px;padding-bottom:80px">
   <?= crumbs_html($crumbs) ?>
-  <h1 class="h1" style="margin-bottom:16px">Ülkeler</h1>
+  <h1 class="h1" style="margin-bottom:16px">Ülkelere göre vize bekleme süreleri</h1>
   <p class="lead" style="margin-bottom:40px">Vize randevu bekleme sürelerini ülke ülke topluyoruz. Bir ülkede yeterli paylaşım birikince sayfası açılıyor.</p>
   <ul class="rows">
     <?php foreach (countries() as $slug => $c): ?>
