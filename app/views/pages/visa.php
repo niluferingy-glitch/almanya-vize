@@ -25,7 +25,7 @@
       <?php if ($fast && $slow): ?>
       <p><?= h($c['name']) ?> turistik vize için randevu ataması şu an <strong><?= months_text($fast['med']) ?> ile <?= months_text($slow['med']) ?> ay</strong> arasında geliyor. En hızlı merkez <?= h($fast['name']) ?> (<?= $fast['med'] ?> gün), en yavaşı <?= h($slow['name']) ?> (<?= $slow['approx'] ? 'yaklaşık ' : '' ?><?= $slow['med'] ?> gün).<?= count($cats) > 1 ? ' Aile ziyareti kategorisi genelde turistikten daha kısa sürüyor.' : '' ?></p>
       <?php elseif (!empty($c['list_since'])): ?>
-      <p><?= h($c['name']) ?> turistik vize için bekleme listesi <strong><?= h(tr_date($c['list_since'])) ?></strong> tarihinde başladı. Liste yeni olduğu için henüz bekleme süresi hesaplayacak kadar paylaşım yok. Kaydolduysan <a href="/paylas/?ulke=<?= h($country) ?>">kayıt tarihini ekle</a>, <?= h($atamaLabel) ?> geldiğinde güncelle. Paylaşımlar biriktikçe merkezlere göre süreler burada görünecek.</p>
+      <p><?= h($c['name']) ?> Büyükelçiliği turistik vize için bekleme listesine geçtiğini <strong><?= h(tr_date($c['list_since'])) ?></strong> tarihinde duyurdu. Liste yeni olduğu için henüz bekleme süresi hesaplayacak kadar paylaşım yok. Kaydolduysan <a href="/paylas/?ulke=<?= h($country) ?>">kayıt tarihini ekle</a>, <?= h($atamaLabel) ?> geldiğinde güncelle. Paylaşımlar biriktikçe merkezlere göre süreler burada görünecek.</p>
       <?php else: ?><p>Henüz yeterli veri yok.</p><?php endif; ?>
     </section>
 
