@@ -2,7 +2,7 @@
 $country = $cslug;
 $cname = $c['centers'][$center]['name'];
 $stats = [];
-foreach (array_keys(CATS) as $k) $stats[$k] = center_stat($country, $center, $k);
+foreach (array_keys(country_cats($country)) as $k) $stats[$k] = center_stat($country, $center, $k);
 $main = $stats['turistik'] ?? null;
 $crumbs = [['Ana sayfa', '/'], ['Ülkeler', '/ulkeler/'], [$c['name'], '/ulkeler/' . $country . '/'], ['Vize', '/ulkeler/' . $country . '/vize/'], [$cname, '/ulkeler/' . $country . '/vize/' . $center . '/']];
 $desc = $main && $main['med'] !== null

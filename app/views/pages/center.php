@@ -18,14 +18,14 @@
 
     <section aria-labelledby="ozet-h" style="margin-top:32px">
       <h2 id="ozet-h" class="sr">Kategorilere göre bekleme süresi</h2>
-      <?php $catRows = []; foreach (CATS as $k => $v) { if ($stats[$k]) $catRows[] = $stats[$k]; } ?>
+      <?php $catRows = []; foreach (country_cats($country) as $k => $v) { if ($stats[$k]) $catRows[] = $stats[$k]; } ?>
       <ol class="ledger ledger-big">
-        <?php foreach (CATS as $k => $v): $st = $stats[$k] ?: ['med' => null, 'n' => 0, 'approx' => false, 'frontier' => null, 'waiting' => 0, 'seed' => false]; ?>
+        <?php foreach (country_cats($country) as $k => $v): $st = $stats[$k] ?: ['med' => null, 'n' => 0, 'approx' => false, 'frontier' => null, 'waiting' => 0, 'seed' => false]; ?>
           <?= ledger_row($v, null, $st, ledger_meta($st) ?: 'henüz paylaşım yok') ?>
         <?php endforeach; ?>
       </ol>
       <?= ledger_notes($catRows) ?>
-      <p class="note">Süre, bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortalama zamandır. <a href="/yontem/">Nasıl hesaplıyoruz?</a></p>
+      <p class="note">Süre, bekleme listesine kaydolduğun günden <?= h($c['atama_text'] ?? 'randevu atama maili') ?>ne kadar geçen ortalama zamandır. <a href="/yontem/">Nasıl hesaplıyoruz?</a></p>
     </section>
 
     <section id="hesapla" aria-labelledby="hesapla-h">

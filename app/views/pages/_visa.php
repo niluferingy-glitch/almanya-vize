@@ -10,5 +10,5 @@ $desc = $fast && $slow
 render('visa', compact('country', 'c', 'fast', 'slow', 'crumbs'), [
     'title' => $c['name'] . ' vize randevu bekleme süreleri (' . $month . ') | Vizesel',
     'desc' => $desc, 'canonical' => '/ulkeler/' . $country . '/vize/', 'nav' => 'vize', 'crumbs' => $crumbs,
-    'schema' => [faq_schema(faq_almanya())],
+    'schema' => [faq_schema(faq($country))],
 ]);

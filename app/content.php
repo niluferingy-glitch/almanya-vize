@@ -49,6 +49,62 @@ function faq_almanya(): array {
     ];
 }
 
+function sources_danimarka(): array {
+    return [
+        ['Danimarka Ankara Büyükelçiliği, turistik vize bekleme listesi hakkında bilgi', 'https://um.dk/tyrkiet/tr/vize-ve-oturum/vizeler/bekleme-listesi-hakkinda-bilgi/'],
+        ['Danimarka Ankara Büyükelçiliği, vize ve oturum', 'https://um.dk/tyrkiet/tr/vize-ve-oturum/'],
+        ['ApplyVisa, Danimarka Dışişleri Bakanlığı çevrim içi vize başvurusu', 'https://applyvisa.um.dk/'],
+        ['VFS Global, Türkiye\'deki Danimarka vize başvuru merkezleri', 'https://visa.vfsglobal.com/one-pager/denmark/turkey/turkish/'],
+    ];
+}
+
+function faq_danimarka(): array {
+    return [
+        ['Bekleme listesi kimleri kapsıyor?',
+         'Yalnızca seyahatinin asıl amacı turizm olan başvuruları. İş seyahati, aile ya da arkadaş ziyareti, kültür ve spor etkinlikleri ile AB vatandaşlarının aile üyelerinin başvuruları listeye girmiyor, bunlar eskisi gibi VFS Global randevusuyla ilerliyor.'],
+        ['Listeye girmemek için başka bir kategori seçersem ne olur?',
+         'Büyükelçilik, aslında turistik olan bir başvuruyu işleme almadan kapatıyor ve turizm kategorisinden yeniden başvurup listeye kaydolmanı istiyor. Yanlış kategoride ısrar edilirse başvuru reddedilebiliyor.'],
+        ['Sıram gelince ne kadar sürem var?',
+         'VFS Global sana e-posta gönderiyor. Devam etmek istediğini bildirip randevu almak için 48 saatin var. Bu yüzden listeye kaydolduğun e-posta adresini sık kontrol et.'],
+        ['Beklerken pasaportum kimde kalıyor?',
+         'Sende. Giriş şartlarını karşıladığın sürece başka seyahatler için kullanabilirsin. Randevu günü orijinal pasaportunu getirmen yeterli.'],
+        ['Vazgeçersem vize ücretini geri alabilir miyim?',
+         'Listedeyken ve Büyükelçilik başvurunu henüz işleme almadıysa ApplyVisa üzerinden başvurunu iptal edip iade isteyebilirsin.'],
+        ['Uçak bileti ve otel almam gerekiyor mu?',
+         'Hayır, karar çıkmadan ödeme yapman gerekmiyor. Seyahat planı ve gidiş dönüş rezervasyonu belge olarak istenebilir. Önceden rezervasyon yaptırmak sıranı öne almıyor, randevular kayıt sırasına göre veriliyor.'],
+        ['Karar ne kadar sürüyor?',
+         'Büyükelçilik, dosya kendisine ulaştıktan sonra en fazla 15 takvim günü içinde karar vermeyi hedefliyor. Ek inceleme gerekirse ya da dosya Danimarka Göçmenlik Dairesi\'ne gönderilirse bu süre 45 güne kadar çıkabiliyor. Süre, VFS\'ye teslim gününden değil dosyanın Büyükelçiliğe ulaştığı günden başlıyor.'],
+        ['Bu süreler resmî mi?',
+         'Hayır. Büyükelçilik listede ne kadar bekleneceğini garanti etmiyor ve bekleme süresi yayınlamıyor. Bu sayfadaki süreler başvuru sahiplerinin paylaştığı tarihlerden hesaplanır.'],
+    ];
+}
+
+function sources(string $country): array { return $country === 'danimarka' ? sources_danimarka() : sources_almanya(); }
+function faq(string $country): array { return $country === 'danimarka' ? faq_danimarka() : faq_almanya(); }
+
+// Ülke sayfasındaki "Süreç adım adım" bölümü
+function steps(string $country): array {
+    if ($country === 'danimarka') return [
+        'intro' => 'Turistik başvurular için 17 Kasım 2026\'dan beri geçerli süreç, Danimarka Büyükelçiliği\'nin duyurusuna göre.',
+        'items' => [
+            ['ApplyVisa\'da başvuru', 'Hesap açarsın, formu doldurursun ve 90 avro vize ücretini çevrim içi ödersin. Ön yazı kimlik numarası olan makbuzu yazdırıp imzalarsın.'],
+            ['VFS bekleme listesine kayıt', 'Makbuzdaki kimlik numarasıyla VFS Global\'in Türkiye sayfasından listeye kaydolur, amaç olarak turizmi seçersin. Bekleme bu günden başlar.'],
+            ['VFS bildirim maili', 'Sıran geldiğinde VFS mail atar. 48 saat içinde devam etmek istediğini bildirip randevu alırsın. Bu sayfadaki süreler bu ana kadar geçen zamanı ölçer.'],
+            ['Randevu ve evrak teslimi', 'Form, makbuz, orijinal pasaport ve kontrol listesindeki belgelerle merkeze kendin gidersin. Dosya buradan Ankara\'daki Büyükelçiliğe gönderilir.'],
+            ['Karar', 'Büyükelçilik dosya kendisine ulaştıktan sonra en fazla 15 takvim günü hedefliyor, ek inceleme gerekirse 45 güne kadar.'],
+        ],
+    ];
+    return [
+        'intro' => 'Ara süreler, kullanıcıların paylaştığı tarihlerden derlenmiştir.',
+        'items' => [
+            ['Bekleme listesine kayıt', 'iDATA\'nın sitesinden ücretsiz olarak sıraya girersin. Bekleme bu günden başlar.'],
+            ['Randevu atama maili', 'Sıran geldiğinde randevu tarihi bildirilir. Bu sayfadaki süreler bu ana kadar geçen zamanı ölçer.'],
+            ['Randevu ve evrak teslimi', 'Paylaşımlarda randevu, atama mailinden 3 ile 15 gün sonraya veriliyor. Randevuyu onaylamak için hizmet bedelinin kısa sürede ödenmesi gerekiyor.'],
+            ['Sonuç ve pasaport', 'Paylaşımlara göre sonuç, evrak tesliminden 2 ile 4 hafta sonra geliyor.'],
+        ],
+    ];
+}
+
 function posts(): array {
     return [
         'atama-maili-geldi-ne-yapmali' => [
@@ -98,6 +154,41 @@ HTML,
 
 function guides(): array {
     return [
+        'danimarka' => [
+            'randevu-nasil-alinir' => [
+                'title' => 'Danimarka vize randevusu nasıl alınır?',
+                'desc'  => 'Danimarka turistik vizesinde 17 Kasım 2026\'da başlayan bekleme listesi: ApplyVisa\'dan randevu gününe kadar süreç, adım adım.',
+                'updated' => '2026-11-17',
+                'body' => <<<'HTML'
+<p>Danimarka'nın Ankara Büyükelçiliği, Türkiye'den yapılan turistik vize başvuruları için 17 Kasım 2026'da geçici bir bekleme listesi başlattı. Artık turistik başvuruda önce sıraya giriyor, sıran gelince randevu alıyorsun. Başvurular Türkiye'de yalnızca VFS Global üzerinden alınıyor.</p>
+<h2>Kimler listeye giriyor?</h2>
+<p>Sadece seyahatinin asıl amacı turizm olanlar. İş seyahati, aile ya da arkadaş ziyareti, kültür ve spor etkinlikleri ile AB vatandaşlarının aile üyeleri listeye girmiyor, bu başvurular eskisi gibi doğrudan VFS randevusuyla ilerliyor.</p>
+<p>Listeyi atlamak için farklı bir kategori seçmek işe yaramıyor. Büyükelçilik turistik olduğunu düşündüğü başvuruyu kapatıp turizm kategorisinden yeniden başvurmanı istiyor. Israr edilirse başvuru reddedilebiliyor.</p>
+<h2>Adım adım</h2>
+<ol>
+<li><strong>ApplyVisa'da başvur.</strong> Danimarka Dışişleri Bakanlığı'nın ApplyVisa sitesinde hesap aç, formu doldur ve 90 avro vize ücretini öde.</li>
+<li><strong>Makbuzu yazdır.</strong> Ödemeden sonra ön yazı kimlik numarası olan bir makbuz oluşuyor. Bunu yazdırıp imzala, randevu günü lazım olacak.</li>
+<li><strong>VFS bekleme listesine kaydol.</strong> Makbuzdaki kimlik numarasıyla VFS Global'in Türkiye sayfasından listeye kaydol ve seyahat amacı olarak turizmi seç.</li>
+<li><strong>Bildirim mailini bekle.</strong> Sıran geldiğinde VFS mail atıyor. Devam etmek istediğini bildirip randevu almak için 48 saatin var.</li>
+<li><strong>Randevuya git.</strong> Form, makbuz, orijinal pasaport ve kontrol listesindeki belgelerle, güncel seyahat planın dahil, merkeze kendin git. VFS kimlik numarasıyla belgelerin uyuştuğunu yerinde kontrol ediyor.</li>
+</ol>
+<h2>Merkezler</h2>
+<p>Danimarka'nın Türkiye'de dört vize başvuru merkezi var: İstanbul, Ankara, İzmir ve Antalya. Hepsini VFS Global işletiyor, kararı Ankara'daki Büyükelçilik veriyor.</p>
+<h2>Beklerken bilmen gerekenler</h2>
+<ul>
+<li>Pasaportun sende kalıyor. Başka seyahatler için kullanabilirsin, randevu günü getirmen yeterli.</li>
+<li>Bilet ya da otel için ödeme yapman gerekmiyor. Rezervasyon belgesi istenebilir ama önceden rezervasyon sıranı öne almıyor.</li>
+<li>Listeye kaydolmak, randevunun seyahat tarihinden önce geleceği anlamına gelmiyor. Büyükelçilik bekleme süresi için garanti vermiyor, erken kaydolmak en güvenli yol.</li>
+<li>Vazgeçersen, başvurun henüz işleme alınmadıysa ApplyVisa'dan iptal edip ücret iadesi isteyebilirsin.</li>
+<li>Randevular kişiye özel. Randevu satan aracılardan uzak dur. Büyükelçilik de acente kullanılmamasını öneriyor.</li>
+</ul>
+<h2>Karar ne kadar sürer?</h2>
+<p>Büyükelçilik, dosya kendisine ulaştıktan sonra en fazla 15 takvim günü içinde karar vermeyi hedefliyor. Ek inceleme gerekirse ya da dosya Danimarka Göçmenlik Dairesi'ne gönderilirse bu süre 45 güne kadar çıkabiliyor. Süre, VFS'ye teslim ettiğin günden değil, dosyanın Büyükelçiliğe ulaştığı günden sayılıyor.</p>
+<h2>Listede ne kadar bekleniyor?</h2>
+<p>Liste yeni başladığı için henüz bildiğimiz bir süre yok. Kaydolduysan <a href="/paylas/?ulke=danimarka">kayıt tarihini Vizesel'e ekle</a>, bildirim maili geldiğinde de o tarihi güncelle. Paylaşımlar biriktikçe merkezlere göre bekleme süresini bu sitede gösteriyoruz.</p>
+HTML,
+            ],
+        ],
         'almanya' => [
             'randevu-nasil-alinir' => [
                 'title' => 'Almanya vize randevusu nasıl alınır?',

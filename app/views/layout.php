@@ -79,6 +79,7 @@ $v = '20261115d';
         <div><p class="fh">Rehberler</p>
           <?php foreach (nav_items() as $n): if (!$n['on'] || $n['key'] === 'yardim') continue; ?><a href="<?= h($n['href']) ?>"><?= h($n['label']) ?></a><?php endforeach; ?>
           <a href="/ulkeler/almanya/vize/randevu-nasil-alinir/">Almanya randevusu nasıl alınır?</a>
+          <a href="/ulkeler/danimarka/vize/randevu-nasil-alinir/">Danimarka randevusu nasıl alınır?</a>
         </div>
         <div><p class="fh">Vizesel</p>
           <a href="/hakkinda/">Hakkında</a><a href="/yontem/">Yöntem</a><a href="/yardim/">Yardım merkezi</a><a href="/paylas/">Tarihlerini paylaş</a><a href="/iletisim/">İletişim</a>

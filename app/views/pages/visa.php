@@ -1,4 +1,4 @@
-<?php $base = '/ulkeler/' . $country . '/vize/'; $entries = public_entries($country, null, 10); ?>
+<?php $base = '/ulkeler/' . $country . '/vize/'; $entries = public_entries($country, null, 10); $cats = country_cats($country); $steps = steps($country); $atamaLabel = $c['atama_text'] ?? 'randevu atama maili'; ?>
 <div class="wrap" style="padding-top:40px"><?= crumbs_html($crumbs) ?></div>
 <div class="wrap doc">
   <aside class="doc-aside" aria-label="Bu sayfada">
@@ -23,21 +23,27 @@
     <section id="kisa-cevap" class="answer" aria-labelledby="kisa-h">
       <h2 id="kisa-h" class="sr">Kısa cevap</h2>
       <?php if ($fast && $slow): ?>
-      <p><?= h($c['name']) ?> turistik vize için randevu ataması şu an <strong><?= months_text($fast['med']) ?> ile <?= months_text($slow['med']) ?> ay</strong> arasında geliyor. En hızlı merkez <?= h($fast['name']) ?> (<?= $fast['med'] ?> gün), en yavaşı <?= h($slow['name']) ?> (<?= $slow['approx'] ? 'yaklaşık ' : '' ?><?= $slow['med'] ?> gün). Aile ziyareti kategorisi genelde turistikten daha kısa sürüyor.</p>
+      <p><?= h($c['name']) ?> turistik vize için randevu ataması şu an <strong><?= months_text($fast['med']) ?> ile <?= months_text($slow['med']) ?> ay</strong> arasında geliyor. En hızlı merkez <?= h($fast['name']) ?> (<?= $fast['med'] ?> gün), en yavaşı <?= h($slow['name']) ?> (<?= $slow['approx'] ? 'yaklaşık ' : '' ?><?= $slow['med'] ?> gün).<?= count($cats) > 1 ? ' Aile ziyareti kategorisi genelde turistikten daha kısa sürüyor.' : '' ?></p>
+      <?php elseif (!empty($c['list_since'])): ?>
+      <p><?= h($c['name']) ?> turistik vize için bekleme listesi <strong><?= h(tr_date($c['list_since'])) ?></strong> tarihinde başladı. Liste yeni olduğu için henüz bekleme süresi hesaplayacak kadar paylaşım yok. Kaydolduysan <a href="/paylas/?ulke=<?= h($country) ?>">kayıt tarihini ekle</a>, <?= h($atamaLabel) ?> geldiğinde güncelle. Paylaşımlar biriktikçe merkezlere göre süreler burada görünecek.</p>
       <?php else: ?><p>Henüz yeterli veri yok.</p><?php endif; ?>
     </section>
 
     <section id="sureler" aria-labelledby="sureler-h">
       <h2 id="sureler-h" class="h2">Merkezlere göre süreler</h2>
-      <p class="sub">Bekleme listesine kaydolduğun günden randevu atama mailine kadar geçen ortalama süre. Merkez adına tıklayarak ayrıntılarını görebilirsin.</p>
+      <p class="sub">Bekleme listesine kaydolduğun günden <?= h($atamaLabel) ?>ne kadar geçen ortalama süre<?= count($cats) === 1 ? ', ' . h(mb_strtolower(reset($cats))) . ' vize' : '' ?>. Merkez adına tıklayarak ayrıntılarını görebilirsin.</p>
+      <?php if (count($cats) > 1): ?>
       <div class="tabs" role="tablist" aria-label="Kategori">
-        <?php $i = 0; foreach (CATS as $k => $v): ?>
+        <?php $i = 0; foreach ($cats as $k => $v): ?>
           <button type="button" role="tab" id="tab-<?= $k ?>" aria-controls="panel-<?= $k ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"><?= h($v) ?></button>
         <?php $i++; endforeach; ?>
       </div>
-      <?php $i = 0; foreach (CATS as $k => $v): ?>
+      <?php $i = 0; foreach ($cats as $k => $v): ?>
         <div role="tabpanel" id="panel-<?= $k ?>" aria-labelledby="tab-<?= $k ?>"<?= $i ? ' hidden' : '' ?>><?= center_table_html($country, $k) ?></div>
       <?php $i++; endforeach; ?>
+      <?php else: ?>
+        <?= center_table_html($country, array_key_first($cats)) ?>
+      <?php endif; ?>
       <p class="note"><a href="/yontem/">Bu sayıları nasıl hesaplıyoruz?</a></p>
     </section>
 
@@ -48,18 +54,17 @@
 
     <section id="surec" aria-labelledby="surec-h">
       <h2 id="surec-h" class="h2">Süreç adım adım</h2>
-      <p class="sub">Ara süreler, kullanıcıların paylaştığı tarihlerden derlenmiştir. Ayrıntılı anlatım: <a href="<?= h($base) ?>randevu-nasil-alinir/">Almanya vize randevusu nasıl alınır?</a></p>
+      <p class="sub"><?= h($steps['intro']) ?> Ayrıntılı anlatım: <a href="<?= h($base) ?>randevu-nasil-alinir/"><?= h($c['name']) ?> vize randevusu nasıl alınır?</a></p>
       <ol class="timeline">
-        <li><div class="dot"><span>1</span><i></i></div><div><h3>Bekleme listesine kayıt</h3><p>iDATA'nın sitesinden ücretsiz olarak sıraya girersin. Bekleme bu günden başlar.</p></div></li>
-        <li><div class="dot"><span>2</span><i></i></div><div><h3>Randevu atama maili</h3><p>Sıran geldiğinde randevu tarihi bildirilir. Bu sayfadaki süreler bu ana kadar geçen zamanı ölçer.</p></div></li>
-        <li><div class="dot"><span>3</span><i></i></div><div><h3>Randevu ve evrak teslimi</h3><p>Paylaşımlarda randevu, atama mailinden 3 ile 15 gün sonraya veriliyor. Randevuyu onaylamak için hizmet bedelinin kısa sürede ödenmesi gerekiyor.</p></div></li>
-        <li><div class="dot"><span>4</span><i></i></div><div><h3>Sonuç ve pasaport</h3><p>Paylaşımlara göre sonuç, evrak tesliminden 2 ile 4 hafta sonra geliyor.</p></div></li>
+        <?php foreach ($steps['items'] as $i => [$st, $sd]): ?>
+        <li><div class="dot"><span><?= $i + 1 ?></span><i></i></div><div><h3><?= h($st) ?></h3><p><?= h($sd) ?></p></div></li>
+        <?php endforeach; ?>
       </ol>
     </section>
 
     <section id="sss" aria-labelledby="sss-h">
       <h2 id="sss-h" class="h2" style="margin-bottom:16px">Sık sorulanlar</h2>
-      <?= faq_html(faq_almanya()) ?>
+      <?= faq_html(faq($country)) ?>
     </section>
 
     <section id="paylasimlar" aria-labelledby="pay-h">
@@ -75,7 +80,7 @@
 
     <section id="kaynaklar" aria-labelledby="kay-h">
       <h2 id="kay-h" class="h2" style="font-size:var(--fs-5);margin-bottom:12px">Kaynaklar</h2>
-      <?= sources_html(array_merge(sources_almanya(), [['Vizesel yöntem ve veri temizleme kuralları', '/yontem/']])) ?>
+      <?= sources_html(array_merge(sources($country), [['Vizesel yöntem ve veri temizleme kuralları', '/yontem/']])) ?>
     </section>
   </article>
 </div>

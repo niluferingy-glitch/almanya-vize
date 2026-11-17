@@ -11,5 +11,5 @@
     <a class="btn" href="/ulkeler/<?= h($country) ?>/vize/">Bekleme süreleri</a>
   </div>
   <h2 class="h2" style="font-size:var(--fs-5);margin-bottom:12px">Kaynaklar</h2>
-  <?= sources_html(sources_almanya()) ?>
+  <?= sources_html(sources($country)) ?>
 </div>

@@ -36,6 +36,7 @@
   <section style="border-top:1px solid var(--line);padding-top:32px;margin-top:24px">
     <h2 style="font-size:var(--fs-3);font-weight:600;margin-bottom:16px">Değişiklik günlüğü</h2>
     <dl style="margin:0;display:grid;grid-template-columns:140px 1fr;gap:10px 20px;color:var(--body);font-size:var(--fs-2)">
+      <dt class="muted">17 Kasım 2026</dt><dd style="margin:0">Danimarka eklendi. Büyükelçiliğin aynı gün başlattığı turistik vize bekleme listesi takip ediliyor, başlangıç tahmini yok.</dd>
       <dt class="muted">14 Kasım 2026</dt><dd style="margin:0">Site açıldı. Almanya için başlangıç tahmini eklendi.</dd>
     </dl>
   </section>

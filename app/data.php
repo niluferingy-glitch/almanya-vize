@@ -10,6 +10,7 @@ function countries(): array {
     return [
         'almanya' => [
             'name' => 'Almanya', 'active' => true, 'provider' => 'iDATA',
+            'atama_label' => 'Atama maili', 'atama_text' => 'randevu atama maili',
             'centers' => [
                 'istanbul-gayrettepe' => ['name' => 'İstanbul Gayrettepe', 'city' => 'İstanbul'],
                 'istanbul-altunizade' => ['name' => 'İstanbul Altunizade', 'city' => 'İstanbul'],
@@ -21,6 +22,19 @@ function countries(): array {
                 'gaziantep'           => ['name' => 'Gaziantep',           'city' => 'Gaziantep'],
             ],
         ],
+        'danimarka' => [
+            // 17.11.2026: Ankara Büyükelçiliği turistik başvurular için geçici bekleme listesi başlattı.
+            // Diğer kategoriler listeye girmiyor, bu yüzden yalnızca turistik takip ediliyor.
+            'name' => 'Danimarka', 'active' => true, 'provider' => 'VFS Global',
+            'cats' => ['turistik'], 'list_since' => '2026-11-17',
+            'atama_label' => 'VFS bildirim maili', 'atama_text' => 'VFS bildirim maili',
+            'centers' => [
+                'istanbul' => ['name' => 'İstanbul', 'city' => 'İstanbul'],
+                'ankara'   => ['name' => 'Ankara',   'city' => 'Ankara'],
+                'izmir'    => ['name' => 'İzmir',    'city' => 'İzmir'],
+                'antalya'  => ['name' => 'Antalya',  'city' => 'Antalya'],
+            ],
+        ],
         'italya'     => ['name' => 'İtalya',     'active' => false, 'centers' => []],
         'fransa'     => ['name' => 'Fransa',     'active' => false, 'centers' => []],
         'hollanda'   => ['name' => 'Hollanda',   'active' => false, 'centers' => []],
@@ -29,6 +43,11 @@ function countries(): array {
     ];
 }
 function country(string $slug): ?array { $c = countries()[$slug] ?? null; return ($c && $c['active']) ? $c : null; }
+// Ülkede takip edilen kategoriler (varsayılan: hepsi)
+function country_cats(string $country): array {
+    $keys = countries()[$country]['cats'] ?? array_keys(CATS);
+    return array_intersect_key(CATS, array_flip($keys));
+}
 function center_name(string $country, string $center): string { return countries()[$country]['centers'][$center]['name'] ?? $center; }
 
 // Kasım 2026'da kamuya açık yorumlardan anonim derlenmiş toplu sayılar. Kişi bazlı veri içermez.
@@ -114,7 +133,7 @@ function country_table(string $country, string $cat): array {
 }
 
 function center_has_data(string $country, string $center): bool {
-    foreach (array_keys(CATS) as $cat) { $s = center_stat($country, $center, $cat); if ($s && $s['med'] !== null) return true; }
+    foreach (array_keys(country_cats($country)) as $cat) { $s = center_stat($country, $center, $cat); if ($s && $s['med'] !== null) return true; }
     return false;
 }
 
@@ -122,7 +141,7 @@ function center_has_data(string $country, string $center): bool {
 function calc_data(string $country): array {
     $out = [];
     foreach (countries()[$country]['centers'] as $slug => $c) {
-        foreach (array_keys(CATS) as $cat) {
+        foreach (array_keys(country_cats($country)) as $cat) {
             $s = center_stat($country, $slug, $cat);
             if ($s && $s['med'] !== null) $out[$slug][$cat] = ['med' => $s['med'], 'n' => $s['n'], 'seed' => $s['seed']];
         }
@@ -154,7 +173,7 @@ function validate_entry(array $b) {
     $center = (string)($b['center'] ?? '');
     $cat = (string)($b['cat'] ?? '');
     $c = country($country);
-    if (!$c || !isset($c['centers'][$center]) || !isset(CATS[$cat]) || !$isDate($b['kayit'] ?? null)) return 'invalid';
+    if (!$c || !isset($c['centers'][$center]) || !isset(country_cats($country)[$cat]) || !$isDate($b['kayit'] ?? null)) return 'invalid';
     $kayit = $b['kayit'];
     $atama = $isDate($b['atama'] ?? null) ? $b['atama'] : null;
     $randevu = $isDate($b['randevu'] ?? null) ? $b['randevu'] : null;

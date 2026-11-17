@@ -75,7 +75,7 @@ function calc_html(string $country, ?string $center = null, ?string $cat = null)
     $o .= '<label class="field">Merkez<select name="center">';
     foreach ($c['centers'] as $slug => $cc) $o .= '<option value="' . h($slug) . '"' . ($slug === $center ? ' selected' : '') . '>' . h($cc['name']) . '</option>';
     $o .= '</select></label><label class="field">Kategori<select name="cat">';
-    foreach (CATS as $k => $v) $o .= '<option value="' . h($k) . '"' . ($k === $cat ? ' selected' : '') . '>' . h($v) . '</option>';
+    foreach (country_cats($country) as $k => $v) $o .= '<option value="' . h($k) . '"' . ($k === $cat ? ' selected' : '') . '>' . h($v) . '</option>';
     $o .= '</select></label><label class="field">Kayıt tarihin<input type="date" name="kayit" max="' . today() . '"></label></form>';
     $o .= '<div class="calc-out" role="status" aria-live="polite" data-calc-out><p class="why">Merkezini, kategorini ve bekleme listesine kaydolduğun günü seç.</p></div>';
     $o .= '<script type="application/json" id="calc-data">' . json_encode(['country' => $country, 'data' => calc_data($country), 'today' => today()], JSON_UNESCAPED_UNICODE) . '</script>';
