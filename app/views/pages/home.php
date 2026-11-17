@@ -2,7 +2,7 @@
 <section class="hero">
   <h1 class="h1">Vize randevun ne zaman gelir?</h1>
   <p class="lead">Başvuru sahiplerinin paylaştığı tarihlerden hesaplanan güncel bekleme süreleri.</p>
-  <form class="searchbar" data-calc data-country="<?= h($country) ?>" onsubmit="return false" aria-label="Bekleme süresi hesapla">
+  <form class="searchbar" data-calc data-country="<?= h($country) ?>" aria-label="Bekleme süresi hesapla">
     <label><span>Ülke</span><select name="country" aria-label="Ülke"><option value="almanya">Almanya</option></select></label>
     <label><span>Merkez</span><select name="center">
       <?php foreach ($c['centers'] as $slug => $cc): ?><option value="<?= h($slug) ?>"><?= h($cc['name']) ?></option><?php endforeach; ?>
@@ -12,7 +12,7 @@
     <button class="btn" type="submit">Hesapla</button>
   </form>
   <div class="calc-result" role="status" aria-live="polite" data-calc-out hidden></div>
-  <script type="application/json" id="calc-data"><?= json_encode(['country' => $country, 'data' => calc_data($country), 'today' => today()], JSON_UNESCAPED_UNICODE) ?></script>
+  <script type="application/json" id="calc-data"><?= json_script(['country' => $country, 'data' => calc_data($country), 'today' => today()]) ?></script>
   <p class="small muted" style="margin-top:16px">Son güncelleme: <?= h(tr_date(today())) ?><?= $last ? ' · Son gelen atama: ' . h(tr_date($last)) : '' ?> · <a href="/yontem/">Nasıl hesaplıyoruz?</a></p>
   <div class="chips">
     <?php foreach (countries() as $slug => $cc): ?>

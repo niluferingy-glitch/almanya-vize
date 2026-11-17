@@ -17,7 +17,12 @@ function not_found(): void {
     exit;
 }
 
-function redirect(string $to, int $code = 301): void { header('Location: ' . $to, true, $code); exit; }
+// Yalnız kendi sitemize yönlendir: yol her zaman tam adresle (https://www.vizesel.com/...) birleştirilir,
+// böylece /\\baska-site.com gibi hileli yollar dışarı çıkamaz.
+function redirect(string $to, int $code = 301): void {
+    if (!str_starts_with($to, '/') || str_starts_with($to, '//') || preg_match('/[\\\\\x00-\x1f\x7f]/', $to)) $to = '/';
+    header('Location: ' . url($to), true, $code); exit;
+}
 
 // ---- Yapısal veri ----
 function schema_breadcrumbs(array $crumbs): array {
@@ -47,7 +52,15 @@ $uri = $_SERVER['REQUEST_URI'] ?? '/';
 $path = rawurldecode(parse_url($uri, PHP_URL_PATH) ?: '/');
 $query = parse_url($uri, PHP_URL_QUERY);
 
+// Ters eğik çizgi, kontrol karakteri, '..' içeren yollar: doğrudan 404
+if (preg_match('/[\\\\\x00-\x1f\x7f]/', $path) || str_contains($path, '..')) not_found();
+
 if (str_starts_with($path, '/api/')) { require APP_DIR . '/api.php'; exit; }
+
+// Sayfalar yalnız GET/HEAD ile açılır
+if (!in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', ['GET', 'HEAD'], true)) {
+    http_response_code(405); header('Allow: GET, HEAD'); exit;
+}
 if ($path === '/sitemap.xml') { require APP_DIR . '/sitemap.php'; exit; }
 
 // Büyük harf ve sondaki eğik çizgi düzeltmesi

@@ -163,9 +163,12 @@
         $('#adm-pending').innerHTML = rows.filter(function (r) { return !+r.approved; }).map(card).join('') || '<p class="muted small">Bekleyen yok.</p>';
         $('#adm-all').innerHTML = rows.filter(function (r) { return +r.approved; }).slice(0, 100).map(card).join('');
         $('#adm-msg').textContent = rows.length + ' kayıt';
-      }).catch(function (e) { $('#adm-msg').textContent = e.message === '403' ? 'Anahtar yanlış.' : 'Yüklenemedi.'; });
+      }).catch(function (e) {
+        if (e.message === '403') { try { sessionStorage.removeItem('vz-adm'); } catch (x) {} }
+        $('#adm-msg').textContent = e.message === '403' ? 'Anahtar yanlış.' : e.message === '429' ? 'Çok fazla hatalı deneme, yarın tekrar dene.' : 'Yüklenemedi.';
+      });
     };
-    $('#adm-go').addEventListener('click', load);
+    $('#adm-form').addEventListener('submit', function (ev) { ev.preventDefault(); load(); });
     adm.addEventListener('click', function (ev) {
       var b = ev.target.closest('button[data-a]'); if (!b) return;
       if (b.dataset.a === 'delete' && !b.dataset.sure) { b.dataset.sure = '1'; b.textContent = 'Emin misin? Tekrar tıkla'; return; }

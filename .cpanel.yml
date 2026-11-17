@@ -2,7 +2,8 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/vizeselc
-    - /bin/mkdir -p $DEPLOYPATH/app
+    - /bin/mkdir -p $DEPLOYPATH/app $DEPLOYPATH/app/logs
     - /bin/cp -R app/. $DEPLOYPATH/app/
     - /bin/cp schema.sql $DEPLOYPATH/app/schema.sql
+    - /bin/chmod 750 $DEPLOYPATH/app/logs
     - /bin/cp -R public_html/. $DEPLOYPATH/public_html/

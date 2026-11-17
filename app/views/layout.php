@@ -2,7 +2,7 @@
 /** @var string $body @var array $meta */
 $canonical = $meta['canonical'] ?? null;
 $schemas = array_merge([schema_site()], $meta['schema']);
-$v = '20261117a';
+$v = '20261117s';
 $ga_id = 'G-BQBS7XJ305';
 $track = !str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/yonetim');
 ?><!doctype html>
@@ -11,11 +11,7 @@ $track = !str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/yonetim');
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php if ($track): ?>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-window.vzAnalitik=function(){if(window.vzGaYuklendi)return;window.vzGaYuklendi=true;gtag('js',new Date());gtag('config','<?= $ga_id ?>');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=<?= $ga_id ?>';document.head.appendChild(s);};
-try{if(localStorage.getItem('vz_cerez')==='kabul')vzAnalitik();}catch(e){}
-</script>
+<script src="/assets/js/analitik.js?v=<?= $v ?>" data-ga="<?= h($ga_id) ?>"></script>
 <?php endif; ?>
 <title><?= h($meta['title']) ?></title>
 <meta name="description" content="<?= h($meta['desc']) ?>">
@@ -39,7 +35,7 @@ try{if(localStorage.getItem('vz_cerez')==='kabul')vzAnalitik();}catch(e){}
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Seyahatname" href="/seyahatname/rss.xml">
 <?php foreach ($schemas as $s): ?>
-<script type="application/ld+json"><?= json_encode($s, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+<script type="application/ld+json"><?= json_script($s) ?></script>
 <?php endforeach; ?>
 </head>
 <body>

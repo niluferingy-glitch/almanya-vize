@@ -71,14 +71,14 @@ function center_table_html(string $country, string $cat, bool $withMeta = true):
 
 function calc_html(string $country, ?string $center = null, ?string $cat = null): string {
     $c = countries()[$country];
-    $o = '<form class="calc-form" data-calc data-country="' . h($country) . '" onsubmit="return false">';
+    $o = '<form class="calc-form" data-calc data-country="' . h($country) . '">';
     $o .= '<label class="field">Merkez<select name="center">';
     foreach ($c['centers'] as $slug => $cc) $o .= '<option value="' . h($slug) . '"' . ($slug === $center ? ' selected' : '') . '>' . h($cc['name']) . '</option>';
     $o .= '</select></label><label class="field">Kategori<select name="cat">';
     foreach (country_cats($country) as $k => $v) $o .= '<option value="' . h($k) . '"' . ($k === $cat ? ' selected' : '') . '>' . h($v) . '</option>';
     $o .= '</select></label><label class="field">Kayıt tarihin<input type="date" name="kayit" max="' . today() . '"></label></form>';
     $o .= '<div class="calc-out" role="status" aria-live="polite" data-calc-out><p class="why">Merkezini, kategorini ve bekleme listesine kaydolduğun günü seç.</p></div>';
-    $o .= '<script type="application/json" id="calc-data">' . json_encode(['country' => $country, 'data' => calc_data($country), 'today' => today()], JSON_UNESCAPED_UNICODE) . '</script>';
+    $o .= '<script type="application/json" id="calc-data">' . json_script(['country' => $country, 'data' => calc_data($country), 'today' => today()]) . '</script>';
     return $o;
 }
 
