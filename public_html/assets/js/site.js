@@ -91,7 +91,8 @@
           mine = { id: mine ? mine.id : o.id, token: mine ? mine.token : o.token, text: row.text };
           try { localStorage.setItem(KEY, JSON.stringify(mine)); } catch (e) {}
           btn.textContent = 'Güncelle';
-          msg.innerHTML = (row.text ? 'Teşekkürler. Tarihlerin hesaba girdi, notun kontrol edildikten sonra görünecek. ' : 'Teşekkürler, tarihlerin hesaba girdi. ')
+          msg.innerHTML = (o.held ? 'Teşekkürler. Tarihlerin alışılmışın dışında göründüğü için kontrol edildikten sonra hesaba girecek. '
+            : row.text ? 'Teşekkürler. Tarihlerin hesaba girdi, notun kontrol edildikten sonra görünecek. ' : 'Teşekkürler, tarihlerin hesaba girdi. ')
             + '<a href="/ulkeler/' + esc(row.country) + '/vize/' + esc(row.center) + '/">Merkezinin sayfasına git</a>';
         })
         .catch(function (e) { msg.textContent = ERR[e.message] || 'Kaydedilemedi, birazdan tekrar dene.'; })
@@ -108,6 +109,44 @@
     });
   }
 
+  // Paylaşımların altındaki yorumlar
+  $$('.reply-form').forEach(function (form) {
+    var f = form.elements, msg = $('.msg', form), btn = $('button[type=submit]', form), rep = $('.replying', form), details = form.closest('details');
+    var NAME = 'vizesel-ad';
+    try { f.u.value = localStorage.getItem(NAME) || ''; } catch (e) {}
+    var setReply = function (id, name) {
+      f.reply_to.value = id || '';
+      rep.hidden = !id;
+      if (id) $('span', rep).textContent = name + ' adlı kişiye cevap yazıyorsun.';
+    };
+    var thread = form.closest('.thread');
+    thread.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-reply]');
+      if (b) { setReply(b.dataset.reply, b.dataset.name); details.open = true; f.text.focus(); return; }
+      if (ev.target.closest('[data-cancel]')) setReply('', '');
+    });
+    var ERR = { limit: 'Bugün için yorum sınırına ulaştın, yarın tekrar dene.', short: 'Yorumunu yaz.', notfound: 'Bu paylaşım artık yok.', invalid: 'Gönderilemedi, sayfayı yenileyip tekrar dene.' };
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var text = f.text.value.trim();
+      if (text.length < 2) { msg.textContent = ERR.short; return; }
+      var mine = null; try { mine = JSON.parse(localStorage.getItem('vizesel-kayit') || 'null'); } catch (e) {}
+      var headers = { 'content-type': 'application/json' };
+      if (mine && mine.id === form.dataset.entry) headers['x-edit-token'] = mine.token;
+      btn.disabled = true; msg.textContent = 'Gönderiliyor…';
+      fetch('/api/comments', { method: 'POST', headers: headers,
+        body: JSON.stringify({ entry_id: form.dataset.entry, reply_to: f.reply_to.value, u: f.u.value.trim(), text: text, web: f.web.value }) })
+        .then(function (res) { return res.json().catch(function () { return {}; }).then(function (o) { if (!res.ok) throw new Error(o.error || 'hata'); return o; }); })
+        .then(function () {
+          try { if (f.u.value.trim()) localStorage.setItem(NAME, f.u.value.trim()); } catch (e) {}
+          f.text.value = ''; setReply('', '');
+          msg.textContent = 'Teşekkürler. Yorumun kontrol edildikten sonra burada görünecek.';
+        })
+        .catch(function (e) { msg.textContent = ERR[e.message] || 'Gönderilemedi, birazdan tekrar dene.'; })
+        .then(function () { btn.disabled = false; });
+    });
+  });
+
   // Yönetim
   var adm = $('#admin');
   if (adm) {
@@ -117,26 +156,50 @@
       return fetch('/api/admin', { method: method, headers: { 'x-admin-token': tok, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
     };
+    var B = function (a, id, label, ghost, danger) {
+      return '<button class="btn' + (ghost ? ' btn-ghost' : '') + '" style="min-height:36px' + (danger ? ';color:var(--stamp)' : '') + '" data-a="' + a + '" data-id="' + esc(id) + '">' + label + '</button>';
+    };
     var card = function (e) {
       return '<div class="entry"><p class="who"><strong>' + esc(e.u) + '</strong> · ' + esc(e.country) + ' / ' + esc(e.center) + ' · ' + esc(e.cat) + ' · kayıt ' + esc(e.kayit)
         + (e.atama ? ' · atama ' + esc(e.atama) : '') + (e.randevu ? ' · randevu ' + esc(e.randevu) : '') + (e.sonuc ? ' · ' + esc(e.sonuc) : '') + ' · eklendi ' + esc(String(e.created_at).slice(0, 10)) + '</p>'
+        + (+e.held ? '<p class="small wait">Hesaba girmedi: ' + esc(e.held_reason || 'kontrol bekliyor') + '</p>' : '')
         + (e.text ? '<p class="txt">' + esc(e.text) + '</p>' : '')
-        + '<p class="facts">' + (+e.approved ? '' : '<button class="btn" style="min-height:36px" data-a="approve" data-id="' + esc(e.id) + '">Notu onayla</button><button class="btn btn-ghost" style="min-height:36px" data-a="reject" data-id="' + esc(e.id) + '">Notu sil, tarihleri tut</button>')
-        + '<button class="btn btn-ghost" style="min-height:36px;color:var(--stamp)" data-a="delete" data-id="' + esc(e.id) + '">Kaydı tamamen sil</button></p></div>';
+        + '<p class="facts">'
+        + (+e.held ? B('release', e.id, 'Tarihleri onayla') : '')
+        + (+e.approved ? '' : B('approve', e.id, 'Notu onayla') + B('reject', e.id, 'Notu sil, tarihleri tut', true))
+        + B('delete', e.id, 'Kaydı tamamen sil', true, true) + '</p></div>';
     };
+    var ccard = function (c) {
+      return '<div class="entry"><p class="who"><strong>' + esc(c.u) + '</strong>' + (+c.is_owner ? ' <span class="tag-owner">paylaşım sahibi</span>' : '')
+        + ' · ' + esc(String(c.created_at).slice(0, 16)) + ' · paylaşım: ' + esc(c.entry_u || '?') + ', ' + esc(c.center || '?') + ', kayıt ' + esc(c.entry_kayit || '?')
+        + (c.reply_to ? ' · bir yoruma cevap' : '') + '</p>'
+        + '<p class="txt" style="white-space:pre-line">' + esc(c.text) + '</p><p class="facts">'
+        + (+c.approved ? '' : B('c_approve', c.id, 'Yorumu onayla'))
+        + B('c_delete', c.id, 'Yorumu sil', true, true)
+        + (c.country && c.center ? ' <a class="small" target="_blank" rel="noopener" href="/ulkeler/' + esc(c.country) + '/vize/' + esc(c.center) + '/#p-' + esc(c.entry_id) + '">sayfada gör</a>' : '')
+        + '</p></div>';
+    };
+    var none = '<p class="muted small">Bekleyen yok.</p>';
     var load = function () {
       tok = $('#adm-tok').value.trim(); try { sessionStorage.setItem('vz-adm', tok); } catch (e) {}
       $('#adm-msg').textContent = '…';
-      api('GET').then(function (rows) {
-        $('#adm-pending').innerHTML = rows.filter(function (r) { return !+r.approved; }).map(card).join('') || '<p class="muted small">Bekleyen yok.</p>';
-        $('#adm-all').innerHTML = rows.filter(function (r) { return +r.approved; }).slice(0, 100).map(card).join('');
-        $('#adm-msg').textContent = rows.length + ' kayıt';
+      api('GET').then(function (d) {
+        var rows = d.entries, cm = d.comments;
+        var held = rows.filter(function (r) { return +r.held; });
+        var notes = rows.filter(function (r) { return !+r.held && !+r.approved; });
+        var cp = cm.filter(function (c) { return !+c.approved; });
+        $('#adm-held').innerHTML = held.map(card).join('') || none;
+        $('#adm-comments').innerHTML = cp.map(ccard).join('') || none;
+        $('#adm-pending').innerHTML = notes.map(card).join('') || none;
+        $('#adm-all').innerHTML = rows.filter(function (r) { return !+r.held && +r.approved; }).slice(0, 100).map(card).join('');
+        $('#adm-cdone').innerHTML = cm.filter(function (c) { return +c.approved; }).slice(0, 50).map(ccard).join('') || '<p class="muted small">Henüz yok.</p>';
+        $('#adm-msg').textContent = rows.length + ' kayıt, ' + cm.length + ' yorum · bekleyen: ' + held.length + ' tarih, ' + cp.length + ' yorum, ' + notes.length + ' not';
       }).catch(function (e) { $('#adm-msg').textContent = e.message === '403' ? 'Anahtar yanlış.' : 'Yüklenemedi.'; });
     };
     $('#adm-go').addEventListener('click', load);
     adm.addEventListener('click', function (ev) {
       var b = ev.target.closest('button[data-a]'); if (!b) return;
-      if (b.dataset.a === 'delete' && !b.dataset.sure) { b.dataset.sure = '1'; b.textContent = 'Emin misin? Tekrar tıkla'; return; }
+      if ((b.dataset.a === 'delete' || b.dataset.a === 'c_delete') && !b.dataset.sure) { b.dataset.sure = '1'; b.textContent = 'Emin misin? Tekrar tıkla'; return; }
       api('POST', { id: b.dataset.id, action: b.dataset.a }).then(load).catch(function () { $('#adm-msg').textContent = 'İşlem başarısız.'; });
     });
     if (tok) load();

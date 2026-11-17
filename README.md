@@ -23,4 +23,5 @@ VIZESEL_CONFIG=/yol/config.test.php php -S localhost:8080 -t public_html tools/d
 - Merkezler, ülkeler, başlangıç tahmini: `app/data.php`
 - Seyahatname yazıları, rehberler, yardım sayfaları, SSS, menü: `app/content.php`
 - Pasaport ve Gezi rehberi menüde kapalı; içerik dolunca `nav_items()` içinde `'on' => true` yapılır.
-- Yönetim paneli: `/yonetim/` (yönetici anahtarı ister). Tarihler onaysız hesaba girer, notlar onaydan sonra görünür.
+- Yönetim paneli: `/yonetim/` (yönetici anahtarı ister). Tarihler doğrudan hesaba girer; şüpheli görünenler (`suspect_reason()`, `app/data.php`) panelde onay bekler. Notlar ve yorumlar onaydan sonra görünür.
+- Veritabanı güncellemesi: yeni sütun ve tablolar ilk istekte otomatik eklenir (`migrate()`, `app/bootstrap.php`), ardından `app/.schema-v2` işaret dosyası yazılır.

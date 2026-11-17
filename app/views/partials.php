@@ -82,13 +82,14 @@ function calc_html(string $country, ?string $center = null, ?string $cat = null)
     return $o;
 }
 
-function entries_html(array $list, bool $showCenter = true): string {
+function entries_html(array $list, bool $showCenter = true, bool $withComments = true): string {
     if (!$list) return '<p class="muted">Henüz kullanıcı paylaşımı yok. <a href="/paylas/">İlk paylaşımı sen yap</a>, bir dakika sürer.</p>';
+    $threads = $withComments ? comments_for(array_column($list, 'id')) : [];
     $o = '<div class="entries">';
     foreach ($list as $e) {
         $end = $e['atama'] ?: $e['randevu'];
         $days = $end ? days_between($e['kayit'], $end) : days_between($e['kayit'], today());
-        $o .= '<article class="entry"><p class="who"><strong>' . h($e['u'] ?: 'anonim') . '</strong>'
+        $o .= '<article class="entry" id="p-' . h($e['id']) . '"><p class="who"><strong>' . h($e['u'] ?: 'anonim') . '</strong>'
             . ($showCenter ? ' · ' . h(center_name($e['country'], $e['center'])) : '') . ' · ' . h(CATS_SHORT[$e['cat']] ?? $e['cat']) . '</p>';
         if ($e['approved'] && $e['text'] !== '') $o .= '<p class="txt">' . h($e['text']) . '</p>';
         $o .= '<p class="facts"><span>Kayıt ' . h(tr_date($e['kayit'])) . '</span>'
@@ -96,9 +97,41 @@ function entries_html(array $list, bool $showCenter = true): string {
             . ($e['randevu'] ? '<span>Randevu ' . h(tr_date($e['randevu'])) . '</span>' : '')
             . ($end ? '<span class="good">' . $days . ' günde geldi</span>' : '<span class="wait">' . $days . ' gündür bekliyor</span>')
             . ($e['sonuc'] === 'onay' ? '<span class="good">Vize verildi</span>' : ($e['sonuc'] === 'ret' ? '<span class="wait">Ret</span>' : ''))
-            . '</p></article>';
+            . '</p>';
+        if ($withComments) $o .= thread_html($e, $threads[$e['id']] ?? []);
+        $o .= '</article>';
     }
     return $o . '</div>';
+}
+
+// Bir paylaşımın altındaki yorumlar ve yorum formu
+function thread_html(array $e, array $comments): string {
+    $names = array_column($comments, 'u', 'id');
+    $o = '<div class="thread">';
+    if ($comments) {
+        $o .= '<p class="thread-count">' . count($comments) . ' yorum</p><ol class="cmts">';
+        foreach ($comments as $c) {
+            $to = $c['reply_to'] && isset($names[$c['reply_to']]) ? $names[$c['reply_to']] : null;
+            $o .= '<li class="cmt" id="y-' . h($c['id']) . '"><p class="who"><strong>' . h($c['u']) . '</strong>'
+                . ((int)$c['is_owner'] ? ' <span class="tag-owner">paylaşım sahibi</span>' : '')
+                . ' · <time datetime="' . h(substr($c['created_at'], 0, 10)) . '">' . h(tr_date($c['created_at'])) . '</time>'
+                . ($to !== null ? ' · <a href="#y-' . h($c['reply_to']) . '">' . h($to) . ' adlı kişiye cevap</a>' : '') . '</p>'
+                . '<p class="txt">' . nl2br(h($c['text']), false) . '</p>'
+                . '<button type="button" class="link-btn" data-reply="' . h($c['id']) . '" data-name="' . h($c['u']) . '">Cevapla</button></li>';
+        }
+        $o .= '</ol>';
+    }
+    $o .= '<details class="reply"><summary>' . ($comments ? 'Yorum yaz' : 'Bu paylaşıma yorum yaz') . '</summary>'
+        . '<form class="reply-form" data-entry="' . h($e['id']) . '" novalidate>'
+        . '<input type="hidden" name="reply_to" value="">'
+        . '<p class="replying small" hidden><span></span> <button type="button" class="link-btn" data-cancel>vazgeç</button></p>'
+        . '<label class="field">Takma ad <span class="opt">(isteğe bağlı)</span><input type="text" name="u" maxlength="24" placeholder="anonim" autocomplete="off"></label>'
+        . '<label class="field">Yorumun<textarea name="text" maxlength="1000" required placeholder="Örn: Ben de aynı ay kaydoldum, hâlâ bekliyorum."></textarea></label>'
+        . '<div class="hp" aria-hidden="true"><label>Web sitesi<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>'
+        . '<p class="note" style="margin-top:0">Yorumlar kontrol edildikten sonra yayınlanır. Telefon, e-posta ya da pasaport numarası yazma.</p>'
+        . '<div><button class="btn" type="submit" style="min-height:40px">Gönder</button><p class="msg" role="status" aria-live="polite"></p></div>'
+        . '</form></details></div>';
+    return $o;
 }
 
 function faq_html(array $faq): string {

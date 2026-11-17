@@ -4,6 +4,8 @@
 const CATS = ['turistik' => 'Turistik', 'ziyaret' => 'Aile / arkadaş ziyareti', 'ticari' => 'Ticari'];
 const CATS_SHORT = ['turistik' => 'Turistik', 'ziyaret' => 'Ziyaret', 'ticari' => 'Ticari'];
 const MIN_REAL = 3;         // Bir merkezde başlangıç tahminini kaldırmak için gereken kullanıcı kaydı
+const SUSPECT_MIN_DAYS = 14;  // Kayıttan atamaya bundan kısa süre şüpheli sayılır
+const SUSPECT_MAX_DAYS = 600; // Bundan uzun süre şüpheli sayılır
 const SEED_DATE = '2026-11-06';
 
 function countries(): array {
@@ -74,7 +76,7 @@ function all_entries(string $country): array {
     static $cache = [];
     if (isset($cache[$country])) return $cache[$country];
     try {
-        $st = db()->prepare('SELECT id, country, center, cat, kayit, atama, randevu, sonuc, u, text, approved, created_at FROM entries WHERE country = ? ORDER BY created_at DESC');
+        $st = db()->prepare('SELECT id, country, center, cat, kayit, atama, randevu, sonuc, u, text, approved, created_at FROM entries WHERE country = ? AND held = 0 ORDER BY created_at DESC');
         $st->execute([$country]);
         $cache[$country] = $st->fetchAll();
     } catch (Throwable $e) {
@@ -165,6 +167,63 @@ function public_entries(string $country, ?string $center = null, int $limit = 20
     return $out;
 }
 
+// ---- Şüpheli kayıt kuralları ----
+// Boş dize: kayıt doğrudan hesaba girer. Dolu dize: kayıt yönetim panelinde onay bekler, gerekçe orada görünür.
+function suspect_reason(array $e, bool $withStats = true): string {
+    $why = [];
+    $kayit = $e['kayit']; $atama = $e['atama'] ?: null; $randevu = $e['randevu'] ?: null;
+    if (preg_match('/\b(test|deneme)\b|vizesel|admin|yönetici/iu', ($e['u'] ?? '') . ' ' . ($e['text'] ?? ''))) $why[] = 'ad veya notta test ya da site adı geçiyor';
+    $end = $atama ?: $randevu;
+    $d = $end ? days_between($kayit, $end) : null;
+    if ($d !== null && $d < SUSPECT_MIN_DAYS) $why[] = ($atama ? 'atama' : 'randevu') . ' kayıttan ' . $d . ' gün sonra';
+    if ($d !== null && $d > SUSPECT_MAX_DAYS) $why[] = 'süre ' . $d . ' gün';
+    if ($atama && $randevu && $randevu < $atama) $why[] = 'randevu atamadan önce';
+    if (!empty($e['sonuc']) && (!$randevu || $randevu > today())) $why[] = 'sonuç var ama randevu tarihi yok ya da ileride';
+    if ($withStats && $d !== null && !$why) {
+        $st = center_stat($e['country'], $e['center'], $e['cat']);
+        if ($st && $st['med']) {
+            $gap = abs($d - $st['med']);
+            if ($gap > max(150, $st['med'] * 0.6)) $why[] = $d . ' gün, merkez ortalaması ' . $st['med'] . ' gün';
+        }
+    }
+    return implode('; ', $why);
+}
+
+// ---- Yorumlar ----
+// Verilen paylaşımların onaylı yorumları, paylaşım kimliğine göre gruplu ve eskiden yeniye sıralı.
+function comments_for(array $entryIds): array {
+    $entryIds = array_values(array_unique(array_filter($entryIds)));
+    if (!$entryIds) return [];
+    try {
+        $in = implode(',', array_fill(0, count($entryIds), '?'));
+        $st = db()->prepare("SELECT id, entry_id, reply_to, u, text, is_owner, created_at FROM comments WHERE approved = 1 AND entry_id IN ($in) ORDER BY created_at ASC");
+        $st->execute($entryIds);
+        $out = [];
+        foreach ($st->fetchAll() as $c) $out[$c['entry_id']][] = $c;
+        return $out;
+    } catch (Throwable $e) {
+        error_log('comments: ' . $e->getMessage());
+        return [];
+    }
+}
+
+function clean_name(string $u): string {
+    $u = mb_substr(trim(preg_replace('/[^\p{L}\p{N} _.\-]/u', '', $u)), 0, 24);
+    return $u !== '' ? $u : 'anonim';
+}
+
+function validate_comment(array $b) {
+    if (!empty($b['web'])) return 'spam';
+    $entry = (string)($b['entry_id'] ?? '');
+    $reply = (string)($b['reply_to'] ?? '');
+    if (!preg_match('/^[a-f0-9]{16}$/', $entry)) return 'invalid';
+    if ($reply !== '' && !preg_match('/^[a-f0-9]{16}$/', $reply)) return 'invalid';
+    $text = trim(preg_replace("/[ \t]+/u", ' ', preg_replace("/\R{3,}/u", "\n\n", str_replace("\r", '', (string)($b['text'] ?? '')))));
+    if (mb_strlen($text) < 2) return 'short';
+    $text = mb_substr($text, 0, 1000);
+    return ['entry_id' => $entry, 'reply_to' => $reply !== '' ? $reply : null, 'text' => $text, 'u' => clean_name((string)($b['u'] ?? ''))];
+}
+
 // ---- Form doğrulama (API) ----
 function validate_entry(array $b) {
     if (!empty($b['web'])) return 'spam';
@@ -185,6 +244,5 @@ function validate_entry(array $b) {
     if ($atama && days_between($kayit, $atama) > 3 * 365) return 'invalid';
     if ($randevu && $atama && days_between($atama, $randevu) > 365) return 'invalid';
     $text = mb_substr(trim(preg_replace('/\s+/u', ' ', (string)($b['text'] ?? ''))), 0, 280);
-    $u = mb_substr(trim(preg_replace('/[^\p{L}\p{N} _.\-]/u', '', (string)($b['u'] ?? ''))), 0, 24);
-    return compact('country', 'center', 'cat', 'kayit', 'atama', 'randevu', 'sonuc', 'text') + ['u' => $u !== '' ? $u : 'anonim'];
+    return compact('country', 'center', 'cat', 'kayit', 'atama', 'randevu', 'sonuc', 'text') + ['u' => clean_name((string)($b['u'] ?? ''))];
 }

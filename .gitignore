@@ -1,3 +1,4 @@
 app/config.php
 *.sqlite
 .DS_Store
+app/.schema-v*
