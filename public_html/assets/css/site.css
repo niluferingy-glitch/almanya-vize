@@ -286,3 +286,10 @@ details.faq p{font-family:var(--serif);font-size:var(--fs-3);color:var(--body);m
 .prose-steps li{margin-bottom:14px}
 .box{border-radius:0;border-left:0;border-right:0;padding-left:0;padding-right:0}
 .box-paper,.box-accent{border-radius:var(--r);padding-left:28px;padding-right:28px;border:0}
+
+/* Çerez izni */
+.cerez{position:fixed;left:16px;right:16px;bottom:16px;z-index:50;max-width:720px;margin:0 auto;display:flex;align-items:center;gap:16px 24px;padding:16px 20px;background:var(--white);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 8px 24px var(--shadow);font-size:var(--fs-2);color:var(--body)}
+.cerez[hidden]{display:none}
+.cerez-btns{display:flex;gap:8px;flex-shrink:0}
+.cerez .btn{min-height:44px;padding:0 20px}
+@media (max-width:760px){.cerez{flex-direction:column;align-items:stretch;left:12px;right:12px;bottom:12px}.cerez-btns .btn{flex:1}}

@@ -2,12 +2,21 @@
 /** @var string $body @var array $meta */
 $canonical = $meta['canonical'] ?? null;
 $schemas = array_merge([schema_site()], $meta['schema']);
-$v = '20261115d';
+$v = '20261117a';
+$ga_id = 'G-BQBS7XJ305';
+$track = !str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/yonetim');
 ?><!doctype html>
 <html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php if ($track): ?>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+window.vzAnalitik=function(){if(window.vzGaYuklendi)return;window.vzGaYuklendi=true;gtag('js',new Date());gtag('config','<?= $ga_id ?>');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=<?= $ga_id ?>';document.head.appendChild(s);};
+try{if(localStorage.getItem('vz_cerez')==='kabul')vzAnalitik();}catch(e){}
+</script>
+<?php endif; ?>
 <title><?= h($meta['title']) ?></title>
 <meta name="description" content="<?= h($meta['desc']) ?>">
 <meta name="robots" content="<?= h($meta['robots']) ?>,max-image-preview:large">
@@ -95,6 +104,15 @@ $v = '20261115d';
     </div>
   </div>
 </footer>
+<?php if ($track): ?>
+<div class="cerez" id="cerez" role="region" aria-label="Çerez izni" hidden>
+  <p>Sitenin nasıl kullanıldığını görmek için Google Analytics çerezlerini kullanmak istiyoruz. İzin vermezsen site aynı şekilde çalışır. <a href="/gizlilik/#cerezler">Ayrıntılar</a></p>
+  <div class="cerez-btns">
+    <button class="btn btn-line" type="button" data-cerez="red">Reddet</button>
+    <button class="btn btn-line" type="button" data-cerez="kabul">Kabul et</button>
+  </div>
+</div>
+<?php endif; ?>
 <script src="/assets/js/site.js?v=<?= $v ?>" defer></script>
 </body>
 </html>

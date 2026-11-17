@@ -7,6 +7,38 @@
   var parse = function (s) { var p = s.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2], 12); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
 
+  // Çerez izni (Google Analytics yalnız onayla yüklenir)
+  var cz = $('#cerez'), czKey = 'vz_cerez';
+  if (cz) {
+    var czGet = function () { try { return localStorage.getItem(czKey); } catch (e) { return null; } };
+    if (!czGet()) cz.hidden = false;
+    $$('[data-cerez]', cz).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = b.getAttribute('data-cerez');
+        try { localStorage.setItem(czKey, v); } catch (e) {}
+        cz.hidden = true;
+        if (v === 'kabul' && window.vzAnalitik) window.vzAnalitik();
+        if (v === 'red' && window.vzGaYuklendi && window.gtag) gtag('consent', 'update', { analytics_storage: 'denied' });
+      });
+    });
+    $$('[data-cerez-ayar]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var was = czGet();
+        try { localStorage.removeItem(czKey); } catch (e) {}
+        if (was === 'kabul') {
+          document.cookie.split(';').forEach(function (c) {
+            var n = c.split('=')[0].trim();
+            if (n.indexOf('_ga') === 0) ['', '.vizesel.com', 'www.vizesel.com'].forEach(function (d) {
+              document.cookie = n + '=; Max-Age=0; path=/' + (d ? '; domain=' + d : '');
+            });
+          });
+        }
+        cz.hidden = false;
+        var f = $('button', cz); if (f) f.focus();
+      });
+    });
+  }
+
   // Mobil menü
   var mb = $('.menu-btn'), mm = $('#mobil-menu');
   if (mb && mm) mb.addEventListener('click', function () {
