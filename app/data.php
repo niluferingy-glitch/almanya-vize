@@ -1,7 +1,7 @@
 <?php
 // Ülkeler, merkezler, başlangıç tahmini ve istatistik hesabı.
 
-const CATS = ['turistik' => 'Turistik', 'ziyaret' => 'Aile / arkadaş ziyareti', 'ticari' => 'Ticari'];
+const CATS = ['turistik' => 'Turistik', 'ziyaret' => 'Aile/arkadaş ziyareti', 'ticari' => 'Ticari'];
 const CATS_SHORT = ['turistik' => 'Turistik', 'ziyaret' => 'Ziyaret', 'ticari' => 'Ticari'];
 const MIN_REAL = 3;         // Bir merkezde başlangıç tahminini kaldırmak için gereken kullanıcı kaydı
 const SEED_DATE = '2026-11-06';

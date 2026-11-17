@@ -132,7 +132,7 @@
     del.addEventListener('click', function (ev) {
       ev.preventDefault();
       if (!mine) { msg.textContent = 'Bu tarayıcıdan eklenmiş bir kayıt yok.'; return; }
-      if (!del.dataset.sure) { del.dataset.sure = '1'; del.textContent = 'emin misin? silmek için tekrar tıkla'; return; }
+      if (!del.dataset.sure) { del.dataset.sure = '1'; del.textContent = 'silmek için tekrar tıkla'; return; }
       fetch('/api/entries/' + encodeURIComponent(mine.id), { method: 'DELETE', headers: { 'x-edit-token': mine.token } })
         .then(function (r) { if (!r.ok) throw 0; mine = null; try { localStorage.removeItem(KEY); } catch (e) {}
           share.reset(); btn.textContent = 'Ekle'; del.textContent = 'silebilirsin'; delete del.dataset.sure; msg.textContent = 'Kaydın silindi.'; })

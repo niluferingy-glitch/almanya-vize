@@ -10,6 +10,6 @@
     <h2>Paylaşımlar</h2>
     <p>Paylaştığın tarihlerin doğru olmasına özen göstermelisin. Not alanına kişisel bilgi, reklam ya da hakaret içeren ifadeler yazmamalısın. Notlar yayınlanmadan önce kontrol edilir; uygun olmayan notlar ve açıkça hatalı görünen kayıtlar yayından kaldırılabilir.</p>
     <h2>Değişiklikler</h2>
-    <p>Bu koşullar zaman zaman güncellenebilir. Güncel hali her zaman bu sayfadadır.</p>
+    <p>Bu koşullar zaman zaman güncellenebilir. Güncel hâli her zaman bu sayfadadır.</p>
   </div>
 </div>

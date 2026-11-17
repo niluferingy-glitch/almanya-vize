@@ -19,13 +19,13 @@
       <li>Randevusu atamadan 1 yıldan daha sonraya verilmiş görünen kayıtlar.</li>
       <li>Aynı bağlantıdan bir günde 3'ten fazla gelen kayıtlar.</li>
     </ul>
-    <h2>"Şu an işlenen kayıtlar" ne demek?</h2>
+    <h2>“Şu an işlenen kayıtlar” ne demek?</h2>
     <p>Bir merkezde ataması gelen en yeni kaydın kayıt ayıdır. Sıranın hangi aya kadar ilerlediğini gösterir. Senin kayıt ayın bundan sonraysa sıran henüz gelmemiştir.</p>
     <h2>Başlangıç tahmini nedir?</h2>
-    <p>Site açılırken hiç kullanıcı kaydı yoktu. Boş görünmemesi için Kasım 2026'da kamuya açık yorumlardan merkez bazında toplu sayılar derledik. Bu sayılar kişi bazlı veri içermez ve "başlangıç tahmini" etiketiyle gösterilir. Bir merkezde en az <?= MIN_REAL ?> kullanıcı kaydı birikince o merkezin başlangıç tahmini kaldırılır.</p>
+    <p>Site açılırken hiç kullanıcı kaydı yoktu. Boş görünmemesi için Kasım 2026'da kamuya açık yorumlardan merkez bazında toplu sayılar derledik. Bu sayılar kişi bazlı veri içermez ve “başlangıç tahmini” etiketiyle gösterilir. Bir merkezde en az <?= MIN_REAL ?> kullanıcı kaydı birikince o merkezin başlangıç tahmini kaldırılır.</p>
     <h2>Tahmin nerede yanılabilir?</h2>
     <ul>
-      <li><strong>Az kayıt:</strong> <?= MIN_REAL ?>'ün altındaki merkezlerde tek bir kayıt sonucu belirler. Bu merkezler "az veri" etiketi taşır.</li>
+      <li><strong>Az kayıt:</strong> <?= MIN_REAL ?>'ün altındaki merkezlerde tek bir kayıt sonucu belirler. Bu merkezler “az veri” etiketi taşır.</li>
       <li><strong>Kim paylaşıyor:</strong> Uzun bekleyenler paylaşmaya daha istekli olabilir. Bu, süreleri olduğundan uzun gösterebilir.</li>
       <li><strong>Kural değişiklikleri:</strong> Temsilcilikler kapasite ya da kural değiştirdiğinde geçmiş kayıtlar yeni durumu yansıtmaz.</li>
       <li><strong>Beyan:</strong> Tarihler kullanıcı beyanıdır. Belgeyle doğrulamıyoruz.</li>

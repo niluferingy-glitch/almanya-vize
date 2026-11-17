@@ -37,7 +37,7 @@ function sources_almanya(): array {
 function faq_almanya(): array {
     return [
         ['Atama maili gelince randevuya kaç gün kalıyor?',
-         'Vizesel\'deki paylaşımlarda randevu, atama mailinden 3 ile 15 gün sonraya veriliyor. Bazı başvuru sahipleri evrakı 4 günde toplamak zorunda kaldığını yazdı. Belge listesini sıraya girdiğin gün hazırlamaya başlamak en güvenli yol.'],
+         'Vizesel\'deki paylaşımlarda randevu, atama mailinden 3 ile 15 gün sonraya veriliyor. Bazı başvuru sahipleri evrakı 4 günde toplamak zorunda kaldıklarını yazdı. Belge listesini sıraya girdiğin gün hazırlamaya başlamak en güvenli yol.'],
         ['Bekleme listesine kayıt ücretli mi?',
          'Hayır. Randevu bekleme listesine kayıt ücretsizdir ve kayıt sırasına göre randevu atanır. Atama geldikten sonra randevuyu onaylamak için iDATA hizmet bedelinin kısa süre içinde ödenmesi gerekir. Güncel süre ve tutar için iDATA\'nın sitesine bak.'],
         ['Hangi iDATA ofisine başvurabilirim?',
@@ -73,7 +73,7 @@ function faq_danimarka(): array {
         ['Uçak bileti ve otel almam gerekiyor mu?',
          'Hayır, karar çıkmadan ödeme yapman gerekmiyor. Seyahat planı ve gidiş dönüş rezervasyonu belge olarak istenebilir. Önceden rezervasyon yaptırmak sıranı öne almıyor, randevular kayıt sırasına göre veriliyor.'],
         ['Karar ne kadar sürüyor?',
-         'Büyükelçilik, dosya kendisine ulaştıktan sonra en fazla 15 takvim günü içinde karar vermeyi hedefliyor. Ek inceleme gerekirse ya da dosya Danimarka Göçmenlik Dairesi\'ne gönderilirse bu süre 45 güne kadar çıkabiliyor. Süre, VFS\'ye teslim gününden değil dosyanın Büyükelçiliğe ulaştığı günden başlıyor.'],
+         'Büyükelçilik, dosya kendisine ulaştıktan sonra en fazla 15 takvim günü içinde karar vermeyi hedefliyor. Ek inceleme gerekirse ya da dosya Danimarka Göçmenlik Dairesine gönderilirse bu süre 45 güne kadar çıkabiliyor. Süre, VFS\'ye teslim gününden değil dosyanın Büyükelçiliğe ulaştığı günden başlıyor.'],
         ['Bu süreler resmî mi?',
          'Hayır. Büyükelçilik listede ne kadar bekleneceğini garanti etmiyor ve bekleme süresi yayınlamıyor. Bu sayfadaki süreler başvuru sahiplerinin paylaştığı tarihlerden hesaplanır.'],
     ];
@@ -85,7 +85,7 @@ function faq(string $country): array { return $country === 'danimarka' ? faq_dan
 // Ülke sayfasındaki "Süreç adım adım" bölümü
 function steps(string $country): array {
     if ($country === 'danimarka') return [
-        'intro' => 'Danimarka Büyükelçiliği\'nin 17 Kasım 2026 tarihli duyurusuna göre turistik başvurularda süreç.',
+        'intro' => 'Danimarka Büyükelçiliğinin 17 Kasım 2026 tarihli duyurusuna göre turistik başvurularda süreç.',
         'items' => [
             ['ApplyVisa\'da başvuru', 'Hesap açarsın, formu doldurursun ve 90 avro vize ücretini çevrim içi ödersin. Ön yazı kimlik numarası olan makbuzu yazdırıp imzalarsın.'],
             ['VFS bekleme listesine kayıt', 'Makbuzdaki kimlik numarasıyla VFS Global\'in Türkiye sayfasından listeye kaydolur, amaç olarak turizmi seçersin. Bekleme bu günden başlar.'],
@@ -108,7 +108,7 @@ function steps(string $country): array {
 function posts(): array {
     return [
         'atama-maili-geldi-ne-yapmali' => [
-            'title' => 'Atama maili geldi: randevu gününe kadar ne yapmalı?',
+            'title' => 'Atama maili geldi: Randevu gününe kadar ne yapmalı?',
             'desc'  => 'Aylarca beklenen mail geldiğinde randevuya bazen yalnız birkaç gün kalır. Bu yazı o birkaç günü sırayla kullanmak için.',
             'kat'   => 'Rehber', 'published' => '2026-11-14', 'updated' => '2026-11-14', 'minutes' => 6,
             'cover' => 'atama', 'cover_alt' => 'Atama maili ve takvim illüstrasyonu', 'cover_credit' => 'İllüstrasyon: Vizesel',
@@ -116,26 +116,26 @@ function posts(): array {
             'summary' => [
                 'İlk gün maildeki tarih, saat ve merkezi kontrol et, randevuyu onaylamak için gereken ödemeyi süresi içinde yap.',
                 'Belge listesini resmî sayfadan indir, eksikleri işaretle.',
-                'Uzun süren belgeleri, yani banka ve işyeri yazılarını, ilk gün iste.',
+                'Uzun süren belgeleri, yani banka ve iş yeri yazılarını, ilk gün iste.',
             ],
             'body' => <<<'HTML'
 <h2>1. Maildeki bilgileri kontrol et ve randevuyu onayla</h2>
 <p>Randevu tarihini, saatini ve hangi merkezde olduğunu not al. Alman temsilciliklerinin duyurusuna göre atanan randevuyu onaylamak için iDATA hizmet bedelinin atamadan sonraki 48 saat içinde ödenmesi gerekiyor. Ödenmeyen randevu geçerli olmayabilir. Güncel süre ve tutarı iDATA'nın sitesinden kontrol et.</p>
 <h2>2. Belge listesini çıkar</h2>
-<p>Schengen başvurularında genelde şu belgeler istenir. Kategoriye göre liste değişir, güncel hali için Alman temsilciliklerinin ve iDATA'nın sayfalarına bak.</p>
+<p>Schengen başvurularında genelde şu belgeler istenir. Kategoriye göre liste değişir, güncel hâli için Alman temsilciliklerinin ve iDATA'nın sayfalarına bak.</p>
 <ul>
 <li>Geçerli pasaport ve eski pasaportlar</li>
 <li>Biyometrik fotoğraf</li>
 <li>Doldurulmuş başvuru formu</li>
 <li>Seyahat sağlık sigortası</li>
 <li>Banka hesap dökümü</li>
-<li>İşyeri ya da okul yazısı</li>
+<li>İş yeri ya da okul yazısı</li>
 <li>Ziyaret vizesinde davet mektubu</li>
 </ul>
-<blockquote><p>Hazırlanması en uzun süren belgeleri ilk gün iste. Fotoğraf ve form bir saatte biter, işyeri yazısının ne zaman geleceğini bilemezsin.</p></blockquote>
+<blockquote><p>Hazırlanması en uzun süren belgeleri ilk gün iste. Fotoğraf ve form bir saatte biter, iş yeri yazısının ne zaman geleceğini bilemezsin.</p></blockquote>
 <h2>3. Günlere böl</h2>
 <dl class="plan">
-<div><dt>1. gün</dt><dd>Mail kontrolü, hizmet bedeli ödemesi, belge listesi, banka ve işyeri yazısı talebi</dd></div>
+<div><dt>1. gün</dt><dd>Mail kontrolü, hizmet bedeli ödemesi, belge listesi, banka ve iş yeri yazısı talebi</dd></div>
 <div><dt>2. gün</dt><dd>Fotoğraf, başvuru formu, sigorta poliçesi</dd></div>
 <div><dt>3. gün</dt><dd>Konaklama ve ulaşım planı, varsa davet mektubu</dd></div>
 <div><dt>Son gün</dt><dd>Dosyayı listeye göre sırala, fotokopileri ayır</dd></div>
@@ -166,11 +166,11 @@ function guides(): array {
 <p>Listeyi atlamak için farklı bir kategori seçmek işe yaramıyor. Büyükelçilik turistik olduğunu düşündüğü başvuruyu kapatıp turizm kategorisinden yeniden başvurmanı istiyor. Israr edilirse başvuru reddedilebiliyor.</p>
 <h2>Adım adım</h2>
 <ol>
-<li><strong>ApplyVisa'da başvur.</strong> Danimarka Dışişleri Bakanlığı'nın ApplyVisa sitesinde hesap aç, formu doldur ve 90 avro vize ücretini öde.</li>
+<li><strong>ApplyVisa'da başvur.</strong> Danimarka Dışişleri Bakanlığının ApplyVisa sitesinde hesap aç, formu doldur ve 90 avro vize ücretini öde.</li>
 <li><strong>Makbuzu yazdır.</strong> Ödemeden sonra ön yazı kimlik numarası olan bir makbuz oluşuyor. Bunu yazdırıp imzala, randevu günü lazım olacak.</li>
 <li><strong>VFS bekleme listesine kaydol.</strong> Makbuzdaki kimlik numarasıyla VFS Global'in Türkiye sayfasından listeye kaydol ve seyahat amacı olarak turizmi seç.</li>
 <li><strong>Bildirim mailini bekle.</strong> Sıran geldiğinde VFS mail atıyor. Mailden sonraki 48 saat içinde devam etmek istediğini VFS'ye bildirip randevu alman gerekiyor.</li>
-<li><strong>Randevuya git.</strong> Form, makbuz, orijinal pasaport ve kontrol listesindeki belgelerle, güncel seyahat planın dahil, merkeze kendin git. VFS kimlik numarasıyla belgelerin uyuştuğunu yerinde kontrol ediyor.</li>
+<li><strong>Randevuya git.</strong> Form, makbuz, orijinal pasaport ve kontrol listesindeki belgelerle, güncel seyahat planın dâhil, merkeze kendin git. VFS kimlik numarasıyla belgelerin uyuştuğunu yerinde kontrol ediyor.</li>
 </ol>
 <h2>Merkezler</h2>
 <p>Danimarka'nın Türkiye'de dört vize başvuru merkezi var: İstanbul, Ankara, İzmir ve Antalya. Hepsini VFS Global işletiyor, kararı Ankara'daki Büyükelçilik veriyor.</p>
@@ -183,7 +183,7 @@ function guides(): array {
 <li>Randevular başvuru sahibine özel bağlanıyor, Büyükelçilik bununla randevuların aracılar tarafından alınıp satılmasını önlemeyi amaçlıyor. Büyükelçilik ayrıca acente kullanılmamasını öneriyor.</li>
 </ul>
 <h2>Karar ne kadar sürer?</h2>
-<p>Büyükelçilik, dosya kendisine ulaştıktan sonra en fazla 15 takvim günü içinde karar vermeyi hedefliyor. Ek inceleme gerekirse ya da dosya Danimarka Göçmenlik Dairesi'ne gönderilirse bu süre 45 güne kadar çıkabiliyor. Süre, VFS'ye teslim ettiğin günden değil, dosyanın Büyükelçiliğe ulaştığı günden sayılıyor.</p>
+<p>Büyükelçilik, dosya kendisine ulaştıktan sonra en fazla 15 takvim günü içinde karar vermeyi hedefliyor. Ek inceleme gerekirse ya da dosya Danimarka Göçmenlik Dairesine gönderilirse bu süre 45 güne kadar çıkabiliyor. Süre, VFS'ye teslim ettiğin günden değil, dosyanın Büyükelçiliğe ulaştığı günden sayılıyor.</p>
 <h2>Listede ne kadar bekleniyor?</h2>
 <p>Liste yeni olduğu için henüz bildiğimiz bir süre yok. Kaydolduysan <a href="/paylas/?ulke=danimarka">kayıt tarihini Vizesel'e ekle</a>, bildirim maili geldiğinde de o tarihi güncelle. Paylaşımlar biriktikçe merkezlere göre bekleme süresini bu sitede gösteriyoruz.</p>
 HTML,
@@ -195,7 +195,7 @@ HTML,
                 'desc'  => 'Bekleme listesine kayıttan randevu gününe kadar Almanya Schengen vizesinde randevu süreci, adım adım.',
                 'updated' => '2026-11-14',
                 'body' => <<<'HTML'
-<p>Almanya, Türkiye'deki Schengen vize randevularını iki aşamalı bir sistemle veriyor: önce bekleme listesine kaydolursun, sonra sıran geldiğinde sana bir randevu tarihi atanır.</p>
+<p>Almanya, Türkiye'deki Schengen vize randevularını iki aşamalı bir sistemle veriyor: Önce bekleme listesine kaydolursun, sonra sıran geldiğinde sana bir randevu tarihi atanır.</p>
 <h2>1. Bekleme listesine kayıt</h2>
 <p>Kayıt, Almanya'nın Türkiye'deki tek yetkili hizmet sağlayıcısı iDATA'nın sitesinden yapılır ve ücretsizdir. Kayıt sırasında başvuracağın ofisi ve vize kategorisini (turistik, ziyaret, ticari gibi) seçersin. Kaydın alındığına dair e-posta gelir.</p>
 <p>Yaşadığın şehir ile seçtiğin iDATA ofisinin aynı Alman temsilciliğinin yetki alanında olması gerekir.</p>
@@ -228,16 +228,16 @@ function help_pages(): array {
 <li>Ülkeyi, başvurduğun merkezi ve kategoriyi seç.</li>
 <li>Bekleme listesine kaydolduğun günü gir. Atama maili geldiyse onun tarihini de ekle.</li>
 <li>İstersen bir takma ad ve kısa bir not yaz. Not, yayınlanmadan önce kontrol edilir.</li>
-<li>Onay kutusunu işaretleyip Ekle'ye bas.</li>
+<li>Onay kutusunu işaretleyip “Ekle” düğmesine bas.</li>
 </ol>
-<p>Ad, e-posta ya da pasaport bilgisi istemiyoruz. Atama maili geldiğinde aynı tarayıcıdan Paylaş sayfasına dönersen kaydın formda hazır olur, yalnız yeni tarihi ekleyip Güncelle'ye basman yeterli.</p>
+<p>Ad, e-posta ya da pasaport bilgisi istemiyoruz. Atama maili geldiğinde aynı tarayıcıdan Paylaş sayfasına dönersen kaydın formda hazır olur, yalnız yeni tarihi ekleyip “Güncelle” düğmesine basman yeterli.</p>
 HTML,
         ],
         'kaydimi-silmek-istiyorum' => [
             'title' => 'Kaydımı nasıl silerim?',
             'desc'  => 'Vizesel\'e eklediğin kaydı istediğin zaman silebilirsin. Aynı tarayıcıdan ya da e-postayla.',
             'body' => <<<'HTML'
-<p>Kaydını eklediğin tarayıcıdan <a href="/paylas/">Paylaş sayfasına</a> git ve formun altındaki "kaydımı sil" bağlantısına iki kez tıkla. Kayıt kalıcı olarak silinir.</p>
+<p>Kaydını eklediğin tarayıcıdan <a href="/paylas/">Paylaş sayfasına</a> git ve formun altındaki “silebilirsin” bağlantısına iki kez tıkla. Kayıt kalıcı olarak silinir.</p>
 <p>Başka bir cihazdan ya da tarayıcının verilerini temizledikten sonra silmek istersen bize yaz. Kaydı bulabilmemiz için merkezi, kategoriyi ve kayıt tarihini belirtmen yeterli.</p>
 HTML,
         ],
