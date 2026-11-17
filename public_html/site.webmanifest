@@ -1,0 +1,13 @@
+{
+  "name": "Vizesel",
+  "short_name": "Vizesel",
+  "lang": "tr",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#1E4E9C",
+  "background_color": "#FFFFFF",
+  "icons": [
+    { "src": "/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
