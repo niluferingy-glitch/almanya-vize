@@ -117,12 +117,34 @@ a.chip.on,.chip.on{background:var(--accent-soft);border-color:var(--accent-soft)
 .hero{max-width:760px;margin:0 auto;padding:96px 24px 56px;text-align:center}
 .hero .h1{font-size:var(--fs-8);line-height:1.12;margin-bottom:16px}
 .hero .lead{margin-bottom:40px}
-.searchbar{display:flex;align-items:stretch;border:1px solid var(--field);border-radius:999px;padding:6px;box-shadow:0 1px 6px var(--shadow);background:var(--white);gap:4px;text-align:left}
-.searchbar label{flex:1 1 150px;display:flex;flex-direction:column;padding:8px 20px;border-right:1px solid var(--line)}
-.searchbar label:last-of-type{border-right:0}
+.searchbar{border:1px solid var(--field);border-radius:999px;padding:6px;box-shadow:0 1px 6px var(--shadow);background:var(--white);text-align:left}
+.searchbar label{position:relative;display:flex;flex-direction:column;gap:2px;min-width:0;padding:10px 22px;cursor:pointer}
 .searchbar span{font-size:var(--fs-1);font-weight:600;color:var(--muted)}
-.searchbar select,.searchbar input{border:0;font:inherit;font-size:var(--fs-3);background:transparent;color:var(--ink);padding:2px 0;min-height:28px;width:100%}
+.searchbar select,.searchbar input{-webkit-appearance:none;appearance:none;border:0;border-radius:0;margin:0;font:inherit;font-size:var(--fs-3);line-height:1.4;background-color:transparent;color:var(--ink);padding:0;min-height:28px;width:100%;cursor:pointer;outline:none}
+.searchbar select{padding-right:22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235F5B54' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 2px center;text-overflow:ellipsis}
+.searchbar input::-webkit-date-and-time-value{text-align:left}
+.searchbar input::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer}
 .searchbar .btn{min-height:52px;padding:0 28px}
+/* Masaüstü: tek satır, metin sütunundan geniş */
+@media (min-width:761px){
+  .searchbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.15fr) auto;align-items:center}
+  .searchbar label{border-radius:999px;transition:background-color .15s}
+  .searchbar label+label::before{content:"";position:absolute;left:0;top:22%;height:56%;width:1px;background:var(--line)}
+  .searchbar label:hover{background:var(--paper)}
+  .searchbar label:focus-within{background:var(--white);box-shadow:0 0 0 2px var(--accent)}
+  .searchbar label:hover::before,.searchbar label:hover+label::before,.searchbar label:focus-within::before,.searchbar label:focus-within+label::before{opacity:0}
+  .searchbar .btn{margin-left:6px}
+}
+@media (min-width:941px){.hero .searchbar{margin-left:calc(50% - 440px);margin-right:calc(50% - 440px)}}
+/* Dar masaüstü: iki satır */
+@media (min-width:761px) and (max-width:940px){
+  .searchbar{grid-template-columns:1fr 1fr;border-radius:28px;row-gap:4px}
+  .searchbar label:nth-child(3)::before{display:none}
+  .searchbar label:nth-child(3)::after,.searchbar label:nth-child(4)::after{content:"";position:absolute;top:-2px;left:22px;right:22px;height:1px;background:var(--line)}
+  .searchbar label:nth-child(1):hover~label:nth-child(3)::after,.searchbar label:nth-child(3):hover::after,.searchbar label:nth-child(3):focus-within::after,
+  .searchbar label:nth-child(2):hover~label:nth-child(4)::after,.searchbar label:nth-child(4):hover::after,.searchbar label:nth-child(4):focus-within::after{opacity:0}
+  .searchbar .btn{grid-column:1/-1;width:100%;height:56px;margin:4px 0 0}
+}
 .hero .chips{justify-content:center;margin-top:36px}
 .calc-result{margin-top:20px;padding:20px 24px;border-radius:var(--r);background:var(--accent-soft);text-align:left}
 .calc-result .big{font-family:var(--serif);font-size:var(--fs-6);color:var(--accent);margin:2px 0 6px}
@@ -130,8 +152,9 @@ a.chip.on,.chip.on{background:var(--accent-soft);border-color:var(--accent-soft)
 @media (max-width:760px){
   .hero{padding:48px 20px 40px;text-align:left}
   .hero .lead{margin-bottom:28px}
-  .searchbar{flex-direction:column;border-radius:16px;padding:0;overflow:hidden;gap:0}
-  .searchbar label{flex:0 0 auto;border-right:0;border-bottom:1px solid var(--line);padding:12px 16px}
+  .searchbar{display:flex;flex-direction:column;border-radius:16px;padding:0;overflow:hidden;gap:0}
+  .searchbar label{flex:0 0 auto;border-bottom:1px solid var(--line);padding:12px 16px}
+  .searchbar label:focus-within{background:var(--accent-soft)}
   .searchbar .btn{border-radius:0;min-height:56px}
   .hero .chips{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;margin:28px -20px 0;padding:0 20px 4px}
 }

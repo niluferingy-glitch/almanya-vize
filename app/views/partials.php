@@ -69,14 +69,34 @@ function center_table_html(string $country, string $cat, bool $withMeta = true):
     return $o . '</ol>' . ledger_notes($rows);
 }
 
+// Merkez seçenekleri: aynı şehirde birden çok merkez varsa şehir başlığı altında kısa adla gösterilir
+function center_options_html(string $country, ?string $selected = null): string {
+    $byCity = [];
+    foreach (countries()[$country]['centers'] as $slug => $cc) $byCity[$cc['city'] ?? $cc['name']][$slug] = $cc;
+    $opt = function (string $slug, string $text, string $full) use ($selected): string {
+        return '<option value="' . h($slug) . '" data-full="' . h($full) . '"' . ($slug === $selected ? ' selected' : '') . '>' . h($text) . '</option>';
+    };
+    $o = '';
+    foreach ($byCity as $city => $list) {
+        if (count($list) === 1) { $slug = array_key_first($list); $o .= $opt($slug, $list[$slug]['name'], $list[$slug]['name']); continue; }
+        $o .= '<optgroup label="' . h($city) . '">';
+        foreach ($list as $slug => $cc) {
+            $short = trim(preg_replace('/^' . preg_quote($city, '/') . '\s+/u', '', $cc['name']));
+            $o .= $opt($slug, $short !== '' ? $short : $cc['name'], $cc['name']);
+        }
+        $o .= '</optgroup>';
+    }
+    return $o;
+}
+
 function calc_html(string $country, ?string $center = null, ?string $cat = null): string {
     $c = countries()[$country];
     $o = '<form class="calc-form" data-calc data-country="' . h($country) . '">';
     $o .= '<label class="field">Merkez<select name="center">';
-    foreach ($c['centers'] as $slug => $cc) $o .= '<option value="' . h($slug) . '"' . ($slug === $center ? ' selected' : '') . '>' . h($cc['name']) . '</option>';
+    $o .= center_options_html($country, $center);
     $o .= '</select></label><label class="field">Kategori<select name="cat">';
     foreach (country_cats($country) as $k => $v) $o .= '<option value="' . h($k) . '"' . ($k === $cat ? ' selected' : '') . '>' . h($v) . '</option>';
-    $o .= '</select></label><label class="field">Kayıt tarihin<input type="date" name="kayit" max="' . today() . '"></label></form>';
+    $o .= '</select></label><label class="field">Kayıt tarihin<input type="date" name="kayit" value="' . today() . '" max="' . today() . '"></label></form>';
     $o .= '<div class="calc-out" role="status" aria-live="polite" data-calc-out><p class="why">Merkezini, kategorini ve bekleme listesine kaydolduğun günü seç.</p></div>';
     $o .= '<script type="application/json" id="calc-data">' . json_script(['country' => $country, 'data' => calc_data($country), 'today' => today()]) . '</script>';
     return $o;

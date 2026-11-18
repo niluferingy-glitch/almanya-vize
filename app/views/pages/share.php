@@ -6,7 +6,7 @@
   <form id="share" class="share-form box" novalidate>
     <input type="hidden" name="country" value="<?= h($preCountry) ?>">
     <label class="field">Merkez<select name="center" required>
-      <?php foreach ($c['centers'] as $slug => $cc): ?><option value="<?= h($slug) ?>"<?= $slug === $preCenter ? ' selected' : '' ?>><?= h($cc['name']) ?></option><?php endforeach; ?>
+      <?= center_options_html($preCountry, $preCenter) ?>
     </select></label>
     <label class="field">Kategori<select name="cat" required><?php foreach (country_cats($preCountry) as $k => $v): ?><option value="<?= h($k) ?>"><?= h($v) ?></option><?php endforeach; ?></select></label>
     <label class="field">Bekleme listesine kayıt tarihi<input type="date" name="kayit" required max="<?= today() ?>"></label>

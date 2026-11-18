@@ -2,7 +2,7 @@
 /** @var string $body @var array $meta */
 $canonical = $meta['canonical'] ?? null;
 $schemas = array_merge([schema_site()], $meta['schema']);
-$v = '20261117s';
+$v = '20261118a';
 $ga_id = 'G-BQBS7XJ305';
 $track = !str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/yonetim');
 ?><!doctype html>

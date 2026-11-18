@@ -8,8 +8,8 @@
       <li><a href="#sureler">Merkezlere göre süreler</a></li>
       <li><a href="#hesapla">Atamam ne zaman gelir?</a></li>
       <li><a href="#surec">Süreç adım adım</a></li>
-      <li><a href="#sss">Sık sorulanlar</a></li>
       <li><a href="#paylasimlar">Paylaşımlar</a></li>
+      <li><a href="#sss">Sık sorulanlar</a></li>
       <li><a href="#kaynaklar">Kaynaklar</a></li>
     </ol>
     </details>
@@ -62,11 +62,6 @@
       </ol>
     </section>
 
-    <section id="sss" aria-labelledby="sss-h">
-      <h2 id="sss-h" class="h2" style="margin-bottom:16px">Sık sorulanlar</h2>
-      <?= faq_html(faq($country)) ?>
-    </section>
-
     <section id="paylasimlar" aria-labelledby="pay-h">
       <div class="section-head"><h2 id="pay-h" class="h2">Paylaşımlar</h2><a href="/paylas/?ulke=<?= h($country) ?>">Tarihlerini ekle</a></div>
       <?= entries_html($entries) ?>
@@ -76,6 +71,11 @@
       <h2 id="ekle-h" class="h2" style="font-size:var(--fs-5);margin-bottom:8px">Tarihlerini paylaş</h2>
       <p class="serif" style="font-size:var(--fs-3);color:var(--body);margin-bottom:20px">Bir dakika sürer, ad veya e-posta istemez. Paylaşımın bir sonraki başvuranın tahminini netleştirir.</p>
       <a class="btn" href="/paylas/?ulke=<?= h($country) ?>">Formu aç</a>
+    </section>
+
+    <section id="sss" aria-labelledby="sss-h">
+      <h2 id="sss-h" class="h2" style="margin-bottom:16px">Sık sorulanlar</h2>
+      <?= faq_html(faq($country)) ?>
     </section>
 
     <section id="kaynaklar" aria-labelledby="kay-h">

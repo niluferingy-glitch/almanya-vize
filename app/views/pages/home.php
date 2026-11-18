@@ -4,11 +4,9 @@
   <p class="lead">Başvuru sahiplerinin paylaştığı tarihlerden hesaplanan güncel bekleme süreleri.</p>
   <form class="searchbar" data-calc data-country="<?= h($country) ?>" aria-label="Bekleme süresi hesapla">
     <label><span>Ülke</span><select name="country" aria-label="Ülke"><option value="almanya">Almanya</option></select></label>
-    <label><span>Merkez</span><select name="center">
-      <?php foreach ($c['centers'] as $slug => $cc): ?><option value="<?= h($slug) ?>"><?= h($cc['name']) ?></option><?php endforeach; ?>
-    </select></label>
+    <label><span>Merkez</span><select name="center"><?= center_options_html($country) ?></select></label>
     <label><span>Kategori</span><select name="cat"><?php foreach (CATS_SHORT as $k => $v): ?><option value="<?= h($k) ?>"><?= h($v) ?></option><?php endforeach; ?></select></label>
-    <label><span>Kayıt tarihin</span><input type="date" name="kayit" max="<?= today() ?>"></label>
+    <label><span>Kayıt tarihin</span><input type="date" name="kayit" value="<?= today() ?>" max="<?= today() ?>"></label>
     <button class="btn" type="submit">Hesapla</button>
   </form>
   <div class="calc-result" role="status" aria-live="polite" data-calc-out hidden></div>

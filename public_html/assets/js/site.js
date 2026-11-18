@@ -68,7 +68,7 @@
       var run = function () {
         var center = form.elements.center.value, cat = form.elements.cat.value, kayit = form.elements.kayit.value;
         if (!kayit) { if (out.hasAttribute('hidden')) return; out.innerHTML = '<p class="why">Bekleme listesine kaydolduğun günü seç.</p>'; return; }
-        var s = (D.data[center] || {})[cat], basis = form.elements.center.selectedOptions[0].text;
+        var s = (D.data[center] || {})[cat], opt = form.elements.center.selectedOptions[0], basis = opt.getAttribute('data-full') || opt.text;
         if (!s) {
           var vals = Object.keys(D.data).map(function (k) { return (D.data[k][cat] || {}).med; }).filter(Boolean).sort(function (a, b) { return a - b; });
           if (!vals.length) { out.hidden = false; out.innerHTML = '<p class="why">Bu kategori için henüz yeterli veri yok.</p>'; return; }
@@ -79,11 +79,12 @@
         var when = MONTHS[est.getMonth()] + ' ' + est.getFullYear();
         out.hidden = false;
         out.innerHTML = '<div><p class="small" style="color:var(--body)">Tahmini atama</p><p class="big">' + esc(when) + '</p></div>'
-          + '<p class="why">' + (waited >= 0 ? waited + ' gündür bekliyorsun. ' : '')
+          + '<p class="why">' + (waited > 0 ? 'Kayıt tarihin ' + k.getDate() + ' ' + MONTHS[k.getMonth()] + ' ' + k.getFullYear() + ', ' + waited + ' gündür bekliyorsun. ' : (waited === 0 ? 'Bugün kaydolduğuna göre hesaplandı. ' : ''))
           + (left > 0 ? 'Yaklaşık ' + left + ' gün kaldı. ' : 'Ortalama süreyi geçtin, atama her an gelebilir. ')
           + 'Hesap: ' + esc(basis) + ' için ' + s.n + ' kayda göre ortalama ' + s.med + ' gün' + (s.seed ? ', başlangıç tahmini' : '') + '.</p>';
       };
       form.addEventListener('input', run); form.addEventListener('submit', function (e) { e.preventDefault(); run(); });
+      if (!out.hasAttribute('hidden') && form.elements.kayit.value) run();
     });
   }
 
