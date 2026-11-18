@@ -19,7 +19,7 @@ function byline_html(string $updated, string $extra = ''): string {
 }
 
 function stat_note(array $s): string {
-    if ($s['med'] === null) return $s['waiting'] ? $s['waiting'] . ' kişi bekliyor' : 'veri yok';
+    if ($s['med'] === null) return $s['waiting'] ? $s['waiting'] . ' kişi hâlâ atama bekliyor' : 'veri yok';
     $parts = [];
     if ($s['seed']) $parts[] = 'başlangıç tahmini';
     $parts[] = $s['n'] . ' kayıt';
@@ -49,7 +49,7 @@ function ledger_meta(array $r): string {
     $p = [];
     if ($r['med'] !== null && $r['frontier']) $p[] = h(tr_month($r['frontier'])) . ' kayıtları işleniyor';
     if ($r['med'] !== null) $p[] = $r['n'] . ' paylaşım';
-    if ($r['waiting']) $p[] = $r['waiting'] . ' kişi bekliyor';
+    if ($r['waiting']) $p[] = $r['waiting'] . ' kişi hâlâ atama bekliyor';
     return implode(' · ', $p);
 }
 function ledger_notes(array $rows): string {
