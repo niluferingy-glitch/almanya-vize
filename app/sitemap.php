@@ -1,8 +1,9 @@
 <?php
 header('Content-Type: application/xml; charset=utf-8');
+require_once APP_DIR . '/pasaport.php';
 $urls = [['/', today()], ['/ulkeler/', today()], ['/seyahatname/', null], ['/yardim/', null], ['/paylas/', null],
          ['/yontem/', '2026-11-14'], ['/hakkinda/', '2026-11-14'], ['/iletisim/', null], ['/gizlilik/', '2026-11-14'],
-         ['/kullanim-kosullari/', '2026-11-14'], [author()['url'], null]];
+         ['/kullanim-kosullari/', '2026-11-14'], [author()['url'], null], ['/pasaport/ucretler/', PASAPORT_UPDATED]];
 foreach (countries() as $cs => $c) {
     if (!$c['active']) continue;
     $urls[] = ['/ulkeler/' . $cs . '/', today()];

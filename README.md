@@ -22,12 +22,13 @@ VIZESEL_CONFIG=/yol/config.test.php php -S localhost:8080 -t public_html tools/d
 ## İçerik
 - Merkezler, ülkeler, başlangıç tahmini: `app/data.php`
 - Seyahatname yazıları, rehberler, yardım sayfaları, SSS, menü: `app/content.php`
+- Pasaport ücretleri: `app/pasaport.php` (tutarlar, SSS, kaynaklar). Yıl başında yalnız bu dosya güncellenir.
 - Pasaport ve Gezi rehberi menüde kapalı; içerik dolunca `nav_items()` içinde `'on' => true` yapılır.
 - Yönetim paneli: `/yonetim/` (yönetici anahtarı ister). Tarihler onaysız hesaba girer, notlar onaydan sonra görünür.
 
 ## Güvenlik
 Kodda olanlar:
-- Tüm sayfalarda güvenlik başlıkları: CSP (yalnız kendi dosyalarımız çalışır), HSTS, çerçeveye gömme yasağı, nosniff. Sayfalarda satır içi `<script>` ya da `onclick=` kullanılmaz; JavaScript yalnız `assets/js/site.js` içinde.
+- Tüm sayfalarda güvenlik başlıkları: CSP (yalnız kendi dosyalarımız çalışır), HSTS, çerçeveye gömme yasağı, nosniff. Sayfalarda satır içi `<script>` ya da `onclick=` kullanılmaz; JavaScript yalnız `assets/js/` altındaki dosyalarda (`site.js`, pasaport ücretleri sayfası için `pasaport.js`).
 - Veritabanı sorgularının hepsi hazır ifadeyle (SQL enjeksiyonuna kapalı), tüm çıktılar `h()` ile kaçışlı.
 - API: başka sitelerden gelen yazma istekleri reddedilir (Origin / Sec-Fetch-Site / JSON zorunlu). Kişi başı günde 3 yeni kayıt, 30 düzenleme; tüm site için günde `daily_cap` yeni kayıt.
 - Yönetim: anahtar en az 32 karakter olmalı, günde 5 hatalı denemeden sonra o IP kilitlenir, istenirse `admin_ips` ile yalnız belirli IP'lere açılır.

@@ -72,7 +72,7 @@ if ($norm !== $path) redirect($norm . ($query ? '?' . $query : ''));
 $seg = array_values(array_filter(explode('/', $path)));
 
 // Eski Cloudflare adreslerinden ve kısa yollardan yönlendirmeler
-$aliases = ['/almanya/' => '/ulkeler/almanya/vize/', '/defter/' => '/seyahatname/', '/blog/' => '/seyahatname/', '/vize/' => '/ulkeler/almanya/vize/', '/ulkeler/almanya/vize/istanbul-beyoglu/' => '/ulkeler/almanya/vize/'];
+$aliases = ['/almanya/' => '/ulkeler/almanya/vize/', '/defter/' => '/seyahatname/', '/blog/' => '/seyahatname/', '/vize/' => '/ulkeler/almanya/vize/', '/ulkeler/almanya/vize/istanbul-beyoglu/' => '/ulkeler/almanya/vize/', '/pasaport/fiyatlar/' => '/pasaport/ucretler/'];
 if (isset($aliases[$path])) redirect($aliases[$path]);
 
 $pagesDir = APP_DIR . '/views/pages/';
@@ -99,6 +99,11 @@ switch ($seg[0] ?? '') {
     case 'yardim':
         if (count($seg) === 1) { require $pagesDir . '_help.php'; break; }
         if (count($seg) === 2 && isset(help_pages()[$seg[1]])) { $hslug = $seg[1]; require $pagesDir . '_help_page.php'; break; }
+        not_found();
+    case 'pasaport':
+        // Pasaport ana sayfası hazır olana kadar ücretler sayfasına geçici yönlendirme.
+        if (count($seg) === 1) redirect('/pasaport/ucretler/', 302);
+        if (count($seg) === 2 && $seg[1] === 'ucretler') { require $pagesDir . '_passport_fees.php'; break; }
         not_found();
     case 'yazar':
         if (count($seg) === 2 && $seg[1] === author()['slug']) { require $pagesDir . '_author.php'; break; }
