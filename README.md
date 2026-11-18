@@ -23,7 +23,7 @@ VIZESEL_CONFIG=/yol/config.test.php php -S localhost:8080 -t public_html tools/d
 - Merkezler, ülkeler, başlangıç tahmini: `app/data.php`
 - Seyahatname yazıları, rehberler, yardım sayfaları, SSS, menü: `app/content.php`
 - Pasaport ücretleri: `app/pasaport.php` (tutarlar, SSS, kaynaklar). Yıl başında yalnız bu dosya güncellenir.
-- Pasaport ve Gezi rehberi menüde kapalı; içerik dolunca `nav_items()` içinde `'on' => true` yapılır.
+- Pasaport menüde açık, şimdilik ücretler sayfasına gider. Gezi rehberi menüde kapalı; içerik dolunca `nav_items()` içinde `'on' => true` yapılır.
 - Yönetim paneli: `/yonetim/` (yönetici anahtarı ister). Tarihler onaysız hesaba girer, notlar onaydan sonra görünür.
 
 ## Güvenlik

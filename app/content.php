@@ -2,10 +2,10 @@
 // Menü, yazar, Seyahatname yazıları, yardım sayfaları ve sık sorulanlar.
 
 function nav_items(): array {
-    // Pasaport ve Gezi rehberi bölümleri içerik dolunca 'on' => true yapılacak.
+    // Gezi rehberi bölümü içerik dolunca 'on' => true yapılacak. Pasaport ana sayfası gelince href /pasaport/ olur.
     return [
         ['label' => 'Vize',         'href' => '/ulkeler/almanya/vize/', 'key' => 'vize',        'on' => true],
-        ['label' => 'Pasaport',     'href' => '/pasaport/',             'key' => 'pasaport',    'on' => false],
+        ['label' => 'Pasaport',     'href' => '/pasaport/ucretler/',    'key' => 'pasaport',    'on' => true],
         ['label' => 'Gezi rehberi', 'href' => '/gezi/',                 'key' => 'gezi',        'on' => false],
         ['label' => 'Seyahatname',  'href' => '/seyahatname/',          'key' => 'seyahatname', 'on' => true],
         ['label' => 'Yardım',       'href' => '/yardim/',               'key' => 'yardim',      'on' => true],
